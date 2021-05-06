@@ -13,6 +13,7 @@ namespace CharacterSpace
         private Transform childObj;
         public float timer;
         public float timerLimit = 5;
+        //private bool seeExpPacket;
 
         void Start()
         {

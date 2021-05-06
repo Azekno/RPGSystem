@@ -68,6 +68,8 @@
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\_MyFiles\Scripts\Spells.cs" />
     <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\PlayerStats.cs" />
+    <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\PlayerHandler.cs" />
+    <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\SkillDisplay.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\ImportedAssets\Pixel Art Icon Pack - RPG\Shader\SH UI Icon Outline Color.shader" />
