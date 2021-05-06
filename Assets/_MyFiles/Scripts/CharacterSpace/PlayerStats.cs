@@ -20,8 +20,11 @@ namespace CharacterSpace
 
         [Header("Main Stats")]
         public string playerName;
-        public int health = 100;
-        public int mana = 100;
+        
+        [SerializeField]
+        private int currentHealth;
+        [SerializeField]
+        private int currentMana;
         
         public int level = 1;
         public int exp = 0;
@@ -41,8 +44,8 @@ namespace CharacterSpace
         //Skill points gained upon level
         public int skillPointLevelModifier = 1;
         
-        int currentHealth;
-        int currentMana;
+        public int maxHealth = 100;
+        public int maxMana = 100;
 
         //Creates a list for the players stats
         [Header("Player Attributes")]
@@ -51,6 +54,9 @@ namespace CharacterSpace
         //Creates a list to the resistances
         [Header("Player Resistances")]
         public List<CharacterAttributes> resistance = new List<CharacterAttributes>();
+
+        [Header("Player Skills Enabled")]
+        public List<Skills> playerSkills = new List<Skills>();
 
         /// <summary>
         /// Takes in the current level of the player, the baseExp and the expExponent. 
@@ -68,18 +74,16 @@ namespace CharacterSpace
         /// Unassigned attributes is increased based on the attributesIncreaseValue. e.g. Eacvh level will increase a players unassigned attributes by 5.
         /// Same thing for the unassigned skill points
         /// </summary>
-        void NextLevel()
+        void LevelUp()
         {
             level++;
-            int tempXP = exp - nextLevelXP;
-            exp = tempXP;
+            exp -= nextLevelXP;
             unassignedAttributes += attributeLevelModifier;
             unassignedSkillPoints += skillPointLevelModifier;
-            health += healthLevelModifier;
-            mana += manaLevelModifier;
-
-
-            
+            maxHealth += healthLevelModifier;
+            maxMana += manaLevelModifier;
+            currentHealth = maxHealth;
+            currentMana = maxMana;
         }
 
         void IncreaseAttributes()
@@ -91,18 +95,61 @@ namespace CharacterSpace
                 unassignedAttributes--;
             }
         }
+        private void Start()
+        {
+            currentHealth = maxHealth;
+            currentMana = maxMana;
+        }
+
         void Update()
         {
             ExpToNextLevel(level);
 
             if(exp >= nextLevelXP)
             {
-                NextLevel();
+                LevelUp();
             }
             if(Input.GetKeyDown(KeyCode.Mouse1))
             {
                 IncreaseAttributes();
             }
         }
+
+        /*Listerner for the player exp*/
+        public int PlayerExpListener
+        {
+            get { return exp; }
+            set
+            {
+                exp = value;
+
+                //If we have subscribers, then tell them the exp has changed;
+                if(onSkillPointChange != null)
+                {
+                    onSkillPointChange();
+                }
+            }
+        }
+        public int PlayerLevelListener
+        {
+            get { return level; }
+            set 
+            {
+                level = value;
+
+                //If we have subscribers, then tell them the level has changed;
+                if(onLevelChange != null)
+                {
+                    onLevelChange();
+                }
+            }
+        }
+
+        //Delegates for the listeners
+        public delegate void OnExpChange();
+        public event OnExpChange onSkillPointChange;
+
+        public delegate void OnLevelChange();
+        public event OnLevelChange onLevelChange;
     }
 }

@@ -9,8 +9,106 @@ namespace CharacterSpace
         public string Description;
         public Sprite Icon;
         public int LevelNeeded;
-        public int SkillPointsNeeded;
+        public int skillPointsNeeded;
 
-        public List<CharacterAttributes> AffectedSkills = new List<CharacterAttributes>();
+        public List<CharacterAttributes> affectedAttributes = new List<CharacterAttributes>();
+
+        public void SetValues(GameObject skillDisplayObject, PlayerStats player)
+        {
+            if(player)
+            {
+                CheckSkills(player);
+            }
+
+            //bit of error handling, to make sure that the ScriptableObject is used
+            if(skillDisplayObject)
+            {
+                SkillDisplay skillDisplay = skillDisplayObject.GetComponent<SkillDisplay>();
+                skillDisplay.skillName.text = name;
+                if(skillDisplay.skillDescription)
+                {
+                    skillDisplay.skillDescription.text = Description;
+                }
+                if(skillDisplay.skillIcon)
+                {
+                    skillDisplay.skillIcon.sprite = Icon;
+                }
+                if(skillDisplay.skillLevel)
+                {
+                    skillDisplay.skillLevel.text = LevelNeeded.ToString();
+                }
+                if(skillDisplay.skillPointsNeeded)
+                {
+                    skillDisplay.skillPointsNeeded.text = skillPointsNeeded.ToString();
+                }
+                if(skillDisplay.skillAttribute)
+                {
+                    skillDisplay.skillAttribute.text = affectedAttributes[0].attribute.ToString();
+                }
+                if(skillDisplay.skillAttributeAmount)
+                {
+                    skillDisplay.skillAttributeAmount.text = "+" + affectedAttributes[0].baseValue.ToString();
+                }
+            }
+        }
+        public bool CheckSkills(PlayerStats player)
+        {
+            //Check if player is the right level
+            if(player.level < LevelNeeded)
+            {
+                return false;
+            }
+            //Check if player has enough skill points
+            if(player.unassignedSkillPoints < skillPointsNeeded)
+            {
+                return false;
+            }
+            //otherwise they can enable this skill
+            return true;
+        }
+        public bool EnableSkill(PlayerStats player)
+        {
+            //Go through all the skills that the player currently has
+            List<Skills>.Enumerator skills = player.playerSkills.GetEnumerator();
+            while(skills.MoveNext())
+            {
+                var CurrSkill = skills.Current;
+                if(CurrSkill.name == this.name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool GetSkill(PlayerStats player)
+        {
+            int i = 0;
+            //List through the Skill's Attributes
+            List<CharacterAttributes>.Enumerator attributes = affectedAttributes.GetEnumerator();
+            while(attributes.MoveNext())
+            {
+                //List through the Players attributes and match with Skill attribute
+                List<CharacterAttributes>.Enumerator playerAttributes = player.attributes.GetEnumerator();
+                while(playerAttributes.MoveNext())
+                {
+                    if(attributes.Current.attribute.name.ToString() == playerAttributes.Current.attribute.name.ToString())
+                    {
+                        //update the players attributes
+                        playerAttributes.Current.baseValue += attributes.Current.baseValue;
+                        //mark that an attribute was updated
+                        i++;
+                    }
+                }
+                if(i > 0)
+                {
+                    //reduce the skill points from the player
+                    player.unassignedSkillPoints -= this.skillPointsNeeded;
+                    //add to the list of skills
+                    player.playerSkills.Add(this);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
