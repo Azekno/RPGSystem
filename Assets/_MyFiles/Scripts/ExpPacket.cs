@@ -11,9 +11,11 @@ namespace CharacterSpace
         public int expGiven = 0;
 
         private Transform childObj;
+        
+        public bool respawnExpPacket;
         public float timer;
         public float timerLimit = 5;
-        //private bool seeExpPacket;
+        
 
         void Start()
         {
@@ -33,8 +35,6 @@ namespace CharacterSpace
             DeactiveObject();
         }
 
-
-
         void ActivateObject()
         {
             childObj.gameObject.SetActive(true);
@@ -47,17 +47,19 @@ namespace CharacterSpace
 
         void Update()
         {
-
-            if (!childObj.gameObject.activeSelf)
+            transform.Rotate(transform.position, 45 * Time.deltaTime);
+            if (respawnExpPacket)
             {
-                if (timer >= timerLimit)
+                if (!childObj.gameObject.activeSelf)
                 {
-                    ActivateObject();
-                    timer = 0;
+                    if (timer >= timerLimit)
+                    {
+                        ActivateObject();
+                        timer = 0;
+                    }
+                    timer += Time.deltaTime;
                 }
-                timer += Time.deltaTime;
             }
         }
     }
-
 }
