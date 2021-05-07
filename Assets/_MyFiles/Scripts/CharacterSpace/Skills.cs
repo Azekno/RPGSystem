@@ -6,9 +6,9 @@ namespace CharacterSpace
     [CreateAssetMenu(menuName = "RPG Generator/Player/Create Skill")]
     public class Skills : ScriptableObject
     {
-        public string Description;
-        public Sprite Icon;
-        public int LevelNeeded;
+        public string description;
+        public Sprite icon;
+        public int levelNeeded;
         public int skillPointsNeeded;
 
         public List<CharacterAttributes> affectedAttributes = new List<CharacterAttributes>();
@@ -27,15 +27,15 @@ namespace CharacterSpace
                 skillDisplay.skillName.text = name;
                 if(skillDisplay.skillDescription)
                 {
-                    skillDisplay.skillDescription.text = Description;
+                    skillDisplay.skillDescription.text = description;
                 }
                 if(skillDisplay.skillIcon)
                 {
-                    skillDisplay.skillIcon.sprite = Icon;
+                    skillDisplay.skillIcon.sprite = icon;
                 }
                 if(skillDisplay.skillLevel)
                 {
-                    skillDisplay.skillLevel.text = LevelNeeded.ToString();
+                    skillDisplay.skillLevel.text = levelNeeded.ToString();
                 }
                 if(skillDisplay.skillPointsNeeded)
                 {
@@ -54,7 +54,7 @@ namespace CharacterSpace
         public bool CheckSkills(PlayerStats player)
         {
             //Check if player is the right level
-            if(player.level < LevelNeeded)
+            if(player.level < levelNeeded)
             {
                 return false;
             }

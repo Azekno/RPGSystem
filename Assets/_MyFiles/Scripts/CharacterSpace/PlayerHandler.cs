@@ -6,20 +6,53 @@ namespace CharacterSpace
     {
         public PlayerStats player;
 
+        public string statMenuHotKey;
+        public string skillMenuHotKey;
+        public string spellMenuHotKey;
+
         [SerializeField]
-        private Canvas skillCanvas;
-        private bool seeCanvas;
+        private Canvas statMenu;
+        private bool seeStatMenu;
+
+        [SerializeField]
+        private Canvas skillMenu;
+        private bool seeSkillMenu;
+
+        [SerializeField]
+        private Canvas spellMenu;
+        private bool seeSpellMenu;
+
 
         // Update is called once per frame
         void Update()
         {
-            if(Input.GetKeyDown("tab"))
+            if(Input.GetKeyDown(statMenuHotKey))
             {
-                if(skillCanvas)
+                if(statMenu)
                 {
-                    seeCanvas = !seeCanvas;
-                    skillCanvas.gameObject.SetActive(seeCanvas);// displays the canvas or not depending on the state of the bool
+                    seeStatMenu = !seeStatMenu;
+                    statMenu.gameObject.SetActive(seeStatMenu);// will display the stat menu depending on the bool
                 }
+            }
+
+            //Can use either of these Get Key Downs to return that if r is pressed then the skill canvas will appear 
+            //if(Input.GetKeyDown("r") || Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(skillMenuHotKey))
+            if(Input.GetKeyDown(skillMenuHotKey))
+            {
+                if(skillMenu)
+                {
+                    seeSkillMenu = !seeSkillMenu;
+                    skillMenu.gameObject.SetActive(seeSkillMenu);// displays the canvas or not depending on the state of the bool
+                }
+            }
+            if(Input.GetKeyDown(spellMenuHotKey))
+            {
+                if(spellMenu)
+                {
+                    seeSpellMenu = !seeSpellMenu;
+                    spellMenu.gameObject.SetActive(seeSpellMenu);// displays the spell canvas depending on the state of the bool
+                }
+
             }
         }
     }

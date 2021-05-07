@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CharacterSpace
 {
@@ -8,7 +6,7 @@ namespace CharacterSpace
 
     public class Attributes : ScriptableObject
     {
-        public string name;
+        //public string name;
         public string description;
         public Sprite thumbnail;
     }

@@ -1,22 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace CharacterSpace
 {
     public class PlayerStats : MonoBehaviour
     {
-        /*/// <summary>
-        /// All apart from health can be "turned off" meaning that different games can be made using this rpg system by changing the stats used
-        /// i.e. Melee combat only game, so mana and any magic related stat can be disabled
-        /// </summary>
-        public int baseHealth;
-        public int currentHealth;
-        [SerializeField] protected int maxHealth;
-
-        public int baseMana;
-        public int currentMana;
-        [SerializeField] protected int maxMana;*/
+        public ParticleSystem particle;
+        public bool particleSystemActive;
 
         [Header("Main Stats")]
         public string playerName;
@@ -34,6 +24,7 @@ namespace CharacterSpace
         
         public int unassignedAttributes = 0;
         public int unassignedSkillPoints = 0;
+        public int unassignedSpellPoints = 0;
 
         //The health level modifier is the amount of health that increases the players health when they level
         public int healthLevelModifier = 10;
@@ -43,6 +34,9 @@ namespace CharacterSpace
         public int attributeLevelModifier = 2;
         //Skill points gained upon level
         public int skillPointLevelModifier = 1;
+        //Spell points gained upon level
+        public int spellPointsLevelModifier = 1;
+        
         
         public int maxHealth = 100;
         public int maxMana = 100;
@@ -84,6 +78,9 @@ namespace CharacterSpace
             maxMana += manaLevelModifier;
             currentHealth = maxHealth;
             currentMana = maxMana;
+            IncreaseSpellPoints();
+            particle.Play();
+
         }
 
         void IncreaseAttributes()
@@ -95,17 +92,23 @@ namespace CharacterSpace
                 unassignedAttributes--;
             }
         }
+
+        void IncreaseSpellPoints()
+        {
+            unassignedSpellPoints += spellPointsLevelModifier;
+
+        }
         private void Start()
         {
             currentHealth = maxHealth;
             currentMana = maxMana;
+            particle.Stop();
         }
 
         void Update()
         {
             ExpToNextLevel(level);
-
-            if(exp >= nextLevelXP)
+            if (exp >= nextLevelXP)
             {
                 LevelUp();
             }
@@ -116,7 +119,7 @@ namespace CharacterSpace
         }
 
         /*Listerner for the player exp*/
-        public int PlayerExpListener
+        public int PlayerSkillPointListener
         {
             get { return exp; }
             set
