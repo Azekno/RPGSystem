@@ -10,14 +10,30 @@ namespace CharacterSpace
 
         [Header("Main Stats")]
         public string playerName;
-        
-        [SerializeField]
-        private int currentHealth;
-        [SerializeField]
-        private int currentMana;
-        
         public int level = 1;
         public int exp = 0;
+        
+        //[SerializeField]
+        public float currentHealth;
+        public float maxHealth = 100;
+        //[SerializeField]
+        public float currentMana;
+        public float maxMana = 100;
+
+        public float baseAttackPower;
+        public float currentAttackPower;
+        public float baseAttackSpeed;
+        public float currentAttackSpeed;
+        public float baseDodge;
+        public float currentDodge;
+        public float baseHitPercent;
+        public float currentHitPercent;
+
+        public float hpRegenTimer;
+        public float hpRegenAmount;
+        public float manaRegenTimer;
+        public float manaRegenAmount;
+
         public int nextLevelXP;
         public float expExponent = 1;
         public float baseExpValue = 100;
@@ -36,10 +52,18 @@ namespace CharacterSpace
         public int skillPointLevelModifier = 1;
         //Spell points gained upon level
         public int spellPointsLevelModifier = 1;
-        
-        
-        public int maxHealth = 100;
-        public int maxMana = 100;
+
+        public bool isDead;
+
+        public GameObject selectedUnit;
+        public EnemyStats enemyStatsScript;
+
+        public bool behindEnemy = false;
+        public bool canAttack = false;
+
+
+        public GameObject rangedSpellPrefab;
+
 
         //Creates a list for the players stats
         [Header("Player Attributes")]
@@ -51,6 +75,9 @@ namespace CharacterSpace
 
         [Header("Player Skills Enabled")]
         public List<Skills> playerSkills = new List<Skills>();
+
+        [Header("Player Spells Enabled")]
+        public List<Spells> playerSpells = new List<Spells>();
 
         /// <summary>
         /// Takes in the current level of the player, the baseExp and the expExponent. 
@@ -116,6 +143,93 @@ namespace CharacterSpace
             {
                 IncreaseAttributes();
             }
+            if(Input.GetMouseButtonDown(0))
+            {
+                SelectTarget();
+            }
+
+            if (selectedUnit != null)
+            {
+                Vector3 toTarget = (selectedUnit.transform.position - transform.position).normalized;
+                //Check if the player is behind Enemy (Calculate dodge, parry, extra damage, etc.)
+                //Good for critical strikes/ backstabs
+                if (Vector3.Dot(toTarget, selectedUnit.transform.forward) < 0)
+                {
+                    behindEnemy = false;
+                }
+                else 
+                {
+                    behindEnemy = true;
+                }
+
+                //Calculate if the player is facing the enemy and is within the attack distance.
+                float distance = Vector3.Distance(this.transform.position, selectedUnit.transform.position);
+                Vector3 targetDir = selectedUnit.transform.position - transform.position;
+                Vector3 forward = transform.forward;
+                float angle = Vector3.Angle(targetDir, forward);
+
+                if(angle > 10.0)
+                {
+                    canAttack = false;
+                }
+                else
+                {
+                    if(distance < 10.0)
+                    {
+                        canAttack = true;
+                    }
+                    else
+                    {
+                        canAttack = false;
+                    }
+                }
+            }
+            //Attack
+            if(Input.GetKeyDown(KeyCode.B))
+            {
+                //ToDo:make sure player is facing enemy and is in attack range
+                if(selectedUnit != null && canAttack)
+                {
+                    BasicAttack();
+                }
+            }
+
+            //Ranged Spell Attack
+            if(Input.GetKeyDown(KeyCode.M))
+            {
+                RangedSpell();
+            }
+        }
+
+        void SelectTarget()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if(Physics.Raycast(ray, out hit, 10000))
+            {
+                if(hit.transform.CompareTag("Enemy"))
+                {
+                    Debug.Log("Hit has occured");
+                    selectedUnit = hit.transform.gameObject;
+
+                    enemyStatsScript = selectedUnit.transform.gameObject.transform.GetComponent<EnemyStats>();
+                }
+            }
+        }
+
+        void BasicAttack()
+        {
+            enemyStatsScript.ReceiveDamage(currentAttackPower);
+        }
+
+        void RangedSpell()
+        {
+            Vector3 spawnSpellLoc = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+
+            GameObject clone;
+            clone = Instantiate(rangedSpellPrefab, spawnSpellLoc, Quaternion.identity);
+            clone.transform.GetComponent<RangedSpell>().target = selectedUnit;
         }
 
         /*Listerner for the player exp*/
