@@ -27,6 +27,7 @@ public class EnemyStats : MonoBehaviour
         {
             isDead = true;
             currentHp = 0;
+            Die();
         }
     }
 
@@ -39,4 +40,10 @@ public class EnemyStats : MonoBehaviour
             Debug.Log("Enemy current has " + currentHp + " health remaining");
         }
     }
+
+    private void Die()
+    {
+        Destroy(this.gameObject);
+    }
+
 }

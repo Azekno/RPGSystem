@@ -29,6 +29,10 @@ namespace CharacterSpace
         public float baseHitPercent;
         public float currentHitPercent;
 
+        public float baseMagicAttackPower;
+        public float currentMagicAttackPower;
+        public float spellCastTimer;
+
         public float hpRegenTimer;
         public float hpRegenAmount;
         public float manaRegenTimer;
@@ -60,6 +64,7 @@ namespace CharacterSpace
 
         public bool behindEnemy = false;
         public bool canAttack = false;
+        public bool canCast = false;
 
 
         public GameObject rangedSpellPrefab;
@@ -168,13 +173,13 @@ namespace CharacterSpace
                 Vector3 forward = transform.forward;
                 float angle = Vector3.Angle(targetDir, forward);
 
-                if(angle > 10.0)
+                if(angle > 20.0)
                 {
                     canAttack = false;
                 }
                 else
                 {
-                    if(distance < 10.0)
+                    if(distance < 20.0)
                     {
                         canAttack = true;
                     }
@@ -197,7 +202,10 @@ namespace CharacterSpace
             //Ranged Spell Attack
             if(Input.GetKeyDown(KeyCode.M))
             {
-                RangedSpell();
+                if(selectedUnit != null)
+                {
+                    RangedSpell();
+                }
             }
         }
 
@@ -229,7 +237,8 @@ namespace CharacterSpace
 
             GameObject clone;
             clone = Instantiate(rangedSpellPrefab, spawnSpellLoc, Quaternion.identity);
-            clone.transform.GetComponent<RangedSpell>().target = selectedUnit;
+            clone.GetComponent<RangedSpell>().target = selectedUnit;
+            enemyStatsScript.ReceiveDamage(currentMagicAttackPower);
         }
 
         /*Listerner for the player exp*/
