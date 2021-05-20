@@ -28,7 +28,7 @@ public class UserCamera : MonoBehaviour
     private float currentDistance;
     public float desiredDistance;
     private float correctedDistance;
-    private bool rotateBehind;
+    private bool rotateBehind = false;
 
     public GameObject userModel;
     public bool inFirstPerson;

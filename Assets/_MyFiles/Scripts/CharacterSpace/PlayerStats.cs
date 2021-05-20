@@ -12,22 +12,25 @@ namespace CharacterSpace
         public string playerName;
         public int level = 1;
         public int exp = 0;
-        
-        //[SerializeField]
+
+        public float baseHealth = 100;
         public float currentHealth;
-        public float maxHealth = 100;
-        //[SerializeField]
+        [SerializeField]
+        private float maxHealth;
+
+        public float baseMana = 100;
         public float currentMana;
-        public float maxMana = 100;
+        [SerializeField]
+        private float maxMana;
 
         public float baseAttackPower;
         public float currentAttackPower;
         public float baseAttackSpeed;
         public float currentAttackSpeed;
-        public float baseDodge;
-        public float currentDodge;
-        public float baseHitPercent;
-        public float currentHitPercent;
+        //public float baseDodge;
+        //public float currentDodge;
+        public float baseCritHitPercent;
+        public float currentCritHitPercent;
 
         public float baseMagicAttackPower;
         public float currentMagicAttackPower;
@@ -51,11 +54,13 @@ namespace CharacterSpace
         //The mana level modifier is just how much mana is increased upon level up.
         public int manaLevelModifier = 10;
         //The amount of attributes gained when the player levels
-        public int attributeLevelModifier = 2;
+        public int levelUpAttributeModifier = 2;
         //Skill points gained upon level
-        public int skillPointLevelModifier = 1;
+        public int levelSkillPointModifier = 1;
         //Spell points gained upon level
         public int spellPointsLevelModifier = 1;
+
+        public int statIncreaseModifier;
 
         public bool isDead;
 
@@ -104,8 +109,8 @@ namespace CharacterSpace
         {
             level++;
             exp -= nextLevelXP;
-            unassignedAttributes += attributeLevelModifier;
-            unassignedSkillPoints += skillPointLevelModifier;
+            unassignedAttributes += levelUpAttributeModifier;
+            unassignedSkillPoints += levelSkillPointModifier;
             maxHealth += healthLevelModifier;
             maxMana += manaLevelModifier;
             currentHealth = maxHealth;
@@ -119,9 +124,17 @@ namespace CharacterSpace
         {
             if(unassignedAttributes > 0)
             {
-                CharacterAttributes tempAttri = attributes.Find(x => x.attribute.name == "Strength");
-                tempAttri.baseValue += 2;
-                unassignedAttributes--;
+                List<CharacterAttributes>.Enumerator playerAttributes = attributes.GetEnumerator();
+                while(playerAttributes.MoveNext())
+                {
+                    var currentAttribute = playerAttributes.Current;
+                    if(currentAttribute.attribute.name == this.name)
+                    {
+                        currentAttribute.baseValue += statIncreaseModifier;
+                        playerAttributes.Current.baseValue += currentAttribute.baseValue;
+                        unassignedAttributes--;
+                    }
+                }
             }
         }
 
@@ -132,13 +145,23 @@ namespace CharacterSpace
         }
         private void Start()
         {
+            maxHealth = (baseHealth + (attributes.Find(xc => xc.attribute.name == "Vitality").baseValue * 10));
+            maxMana = (baseMana + (attributes.Find(x => x.attribute.name == "Wisdom").baseValue * 2)) / 2;
+            currentAttackPower = (baseAttackPower + (attributes.Find(x => x.attribute.name == "Strength").baseValue * 2)) / 2;
+            currentMagicAttackPower = (baseMagicAttackPower + (attributes.Find(x => x.attribute.name == "Intelligence").baseValue * 2)) / 2;
+            currentAttackSpeed = (baseAttackSpeed + (attributes.Find(x => x.attribute.name == "Dexterity").baseValue * 2)) / 2;
+            currentCritHitPercent = (baseCritHitPercent + (attributes.Find(x => x.attribute.name == "Agility").baseValue * 2)) / 4;
+
             currentHealth = maxHealth;
             currentMana = maxMana;
+
+            hpRegenAmount = (maxHealth + attributes.Find(x => x.attribute.name == "Vitality").baseValue) / 100;
             particle.Stop();
         }
 
         void Update()
         {
+            AdjustingHealth();
             ExpToNextLevel(level);
             if (exp >= nextLevelXP)
             {
@@ -240,6 +263,25 @@ namespace CharacterSpace
             clone.GetComponent<RangedSpell>().target = selectedUnit;
             enemyStatsScript.ReceiveDamage(currentMagicAttackPower);
         }
+
+        public void AdjustingHealth()
+        {
+            if (currentHealth <= 0)
+            {
+                //Player will die
+            }
+            if (currentHealth < maxHealth)
+            {
+                currentHealth += hpRegenAmount * Time.deltaTime;
+            }
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+        }
+
+
+
 
         /*Listerner for the player exp*/
         public int PlayerSkillPointListener

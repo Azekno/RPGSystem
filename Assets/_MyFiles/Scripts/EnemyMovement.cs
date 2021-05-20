@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private float latestDirectionChangeTime;
+    //private float latestDirectionChangeTime;
     //private readonly float directionChangeTime = 3f;
     //public float directionChangeTime = 3f;
     public float characterMoveSpeed = 2f;
@@ -19,7 +19,7 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         //directionChangeTimer = timeLimit;
-        latestDirectionChangeTime = 0f;
+        //latestDirectionChangeTime = 0f;
         CalculateNewMovementVector();
     }
 
@@ -40,11 +40,11 @@ public class EnemyMovement : MonoBehaviour
             CalculateNewMovementVector();
         }
 
+        transform.position = new Vector3(transform.position.x + (movementPerSecond.x * Time.deltaTime), transform.position.y, transform.position.z + (movementPerSecond.z * Time.deltaTime));
         //Move enemy
         if(!isColliding)
         {
-            //transform.position = new Vector3(transform.position.x + (movementPerSecond.x * Time.deltaTime), transform.position.y, transform.position.z + (movementPerSecond.z * Time.deltaTime)) ? isColliding : !isColliding;
-            transform.position = new Vector3(transform.position.x + (movementPerSecond.x * Time.deltaTime), transform.position.y, transform.position.z + (movementPerSecond.z * Time.deltaTime));
+            //transform.position = new Vector3(transform.position.x + (movementPerSecond.x * Time.deltaTime), transform.position.y, transform.position.z + (movementPerSecond.z * Time.deltaTime));
         }
     }
 
@@ -61,10 +61,9 @@ public class EnemyMovement : MonoBehaviour
         {
             isColliding = true;
             directionChangeTimer = 0;
-            CalculateNewMovementVector();
-            Vector3.Reflect()
-            collision.contacts[0].normal
-            //movementDirection = -movementDirection;
+            //CalculateNewMovementVector();
+            movementPerSecond *= -1;
         }
     }
 }
+

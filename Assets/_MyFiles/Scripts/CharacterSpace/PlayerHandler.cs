@@ -11,15 +11,15 @@ namespace CharacterSpace
         public string spellMenuHotKey;
 
         [SerializeField]
-        private Canvas statMenu;
+        private Canvas statMenu = null;
         private bool seeStatMenu;
 
         [SerializeField]
-        private Canvas skillMenu;
+        private Canvas skillMenu = null;
         private bool seeSkillMenu;
 
         [SerializeField]
-        private Canvas spellMenu;
+        private Canvas spellMenu = null;
         private bool seeSpellMenu;
 
 

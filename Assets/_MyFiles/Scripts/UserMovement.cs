@@ -14,7 +14,7 @@ public class UserMovement : MonoBehaviour
 
     public bool grounded;
     private Vector3 moveDirection = Vector3.zero;
-    private bool isWalking;
+    private bool isWalking = false;
     private string moveStatus = "idle";
 
     public GameObject camera1;

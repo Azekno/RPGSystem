@@ -56,6 +56,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\_MyFiles\Scripts\EnemyMovement.cs" />
     <Compile Include="Assets\_MyFiles\Scripts\UI.cs" />
     <Compile Include="Assets\_MyFiles\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\_MyFiles\Scripts\Menu\README.cs" />
@@ -73,7 +74,7 @@
     <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\Spells.cs" />
     <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\PlayerStats.cs" />
     <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\SkillDisplay.cs" />
-    <Compile Include="Assets\_MyFiles\Scripts\EnemyMovement.cs" />
+    <Compile Include="Assets\_MyFiles\Scripts\StatMenu.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\ImportedAssets\Pixel Art Icon Pack - RPG\Shader\SH UI Icon Outline Color.shader" />
