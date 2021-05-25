@@ -41,7 +41,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1470203123150697150}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
@@ -60,6 +60,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStats: {fileID: 0}
   expGiven: 0
+  respawnExpPacket: 0
+  timer: 0
+  timerLimit: 5
 --- !u!1 &5616460028672855885
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,7 +44,7 @@ namespace CharacterSpace
         public int nextLevelXP;
         public float expExponent = 1;
         public float baseExpValue = 100;
-        
+
         public int unassignedAttributes = 0;
         public int unassignedSkillPoints = 0;
         public int unassignedSpellPoints = 0;
@@ -71,9 +71,25 @@ namespace CharacterSpace
         public bool canAttack = false;
         public bool canCast = false;
 
+        public bool didDoubleClick = false;
+        public float doubleClickTimer;
 
         public GameObject rangedSpellPrefab;
 
+        //Texture
+        public Texture hpBarTexture;
+        public Texture manaBarTexture;
+        public Texture toolTipBackgroundTexture;
+
+        //User GUI Bars stats
+        public float hpBarLength;
+        public float percentOfHp;
+        public float manaBarLength;
+        public float percentOfMana;
+
+
+        //Player Menus
+        public bool PlayerSpellShowMenu;
 
         //Creates a list for the players stats
         [Header("Player Attributes")]
@@ -87,7 +103,7 @@ namespace CharacterSpace
         public List<Skills> playerSkills = new List<Skills>();
 
         [Header("Player Spells Enabled")]
-        public List<Spells> playerSpells = new List<Spells>();
+        public List<Spell> playerSpells = new List<Spell>();
 
         /// <summary>
         /// Takes in the current level of the player, the baseExp and the expExponent. 
@@ -122,13 +138,13 @@ namespace CharacterSpace
 
         void IncreaseAttributes()
         {
-            if(unassignedAttributes > 0)
+            if (unassignedAttributes > 0)
             {
                 List<CharacterAttributes>.Enumerator playerAttributes = attributes.GetEnumerator();
-                while(playerAttributes.MoveNext())
+                while (playerAttributes.MoveNext())
                 {
                     var currentAttribute = playerAttributes.Current;
-                    if(currentAttribute.attribute.name == this.name)
+                    if (currentAttribute.attribute.name == this.name)
                     {
                         currentAttribute.baseValue += statIncreaseModifier;
                         playerAttributes.Current.baseValue += currentAttribute.baseValue;
@@ -143,6 +159,47 @@ namespace CharacterSpace
             unassignedSpellPoints += spellPointsLevelModifier;
 
         }
+
+        private void OnGUI()
+        {
+            //Hp and Mana Bars
+            //Textures
+            GUI.DrawTexture(new Rect(20, 30, 120, 70), toolTipBackgroundTexture);
+            GUI.DrawTexture(new Rect(30, 40, hpBarLength, 20), hpBarTexture);
+            GUI.DrawTexture(new Rect(30, 65, manaBarLength, 20), manaBarTexture);
+            GUI.Label(new Rect(50, 40, 200, 20), "" + currentHealth + " / " + maxHealth);
+            GUI.Label(new Rect(50, 65, 200, 20), "" + currentMana + " / " + maxMana);
+
+
+            //Tooltip spell buttons
+            Rect rect1 = new Rect(Screen.width / 2, Screen.height - 64, 32, 32);
+
+            //if (GUI.Button(new Rect(Screen.width / 2, Screen.height - 64, 32, 32), "5"));
+            //{
+            //    UsedSpell(playerTestSpells[0].id);
+            //}
+            //if(rect1.Contains(Event.current.mousePosition))
+            //{
+            //    GUI.DrawTexture(new Rect(Input.mousePosition.x + 20, Screen.height - Input.mousePosition.y - 150, 200, 200), toolTipBackgroundTexture);
+            //    GUI.Label(new Rect(Input.mousePosition.x + 20, Screen.height - Input.mousePosition.y - 150, 200, 200),
+            //        "Spell name: " + playerTestSpells[0].name + "\n" +
+            //        "Spell description: " + playerTestSpells[0].description + "\n" +
+            //        "Spell id: " + playerTestSpells[0].id);
+            //}
+
+            //Spell Menu Button
+            if (GUI.Button(new Rect(50, Screen.height - 64, 32, 64), "Player Spells Menu Button"))
+            {
+                PlayerSpellShowMenu = !PlayerSpellShowMenu;
+            }
+
+            /*//player spell menu
+            if(PlayerSpellShowMenu)
+            {
+                //show player spell menu for spells learned
+            }*/
+        }
+
         private void Start()
         {
             maxHealth = (baseHealth + (attributes.Find(xc => xc.attribute.name == "Vitality").baseValue * 10));
@@ -161,17 +218,59 @@ namespace CharacterSpace
 
         void Update()
         {
-            AdjustingHealth();
+            //Test spells
+            if (Input.GetKeyDown("5"))
+            {
+                //UsedSpell(playerTestSpells[0].id);
+            }
+            //Test spells
+            if (Input.GetKeyDown("6"))
+            {
+                //UsedSpell(playerTestSpells[1].id);
+            }
+
+            if (currentHealth <= 0)
+            {
+                //Player will die
+                currentHealth = 0;
+            }
+            if (currentHealth < maxHealth)
+            {
+                percentOfHp = currentHealth / maxHealth;
+                hpBarLength = percentOfHp * 100;
+                currentHealth += hpRegenAmount * Time.deltaTime;
+            }
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+
+            if (currentMana <= 0)
+            {
+                currentMana = 0;
+            }
+            if (currentMana < maxHealth)
+            {
+                percentOfMana = currentMana / maxMana;
+                manaBarLength = percentOfMana * 100;
+                currentMana += manaRegenAmount * Time.deltaTime;
+            }
+            if (currentMana > maxMana)
+            {
+                currentMana = maxMana;
+            }
+
+            //AdjustingHealth();
             ExpToNextLevel(level);
             if (exp >= nextLevelXP)
             {
                 LevelUp();
             }
-            if(Input.GetKeyDown(KeyCode.Mouse1))
+            if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 IncreaseAttributes();
             }
-            if(Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 SelectTarget();
             }
@@ -185,7 +284,7 @@ namespace CharacterSpace
                 {
                     behindEnemy = false;
                 }
-                else 
+                else
                 {
                     behindEnemy = true;
                 }
@@ -196,13 +295,13 @@ namespace CharacterSpace
                 Vector3 forward = transform.forward;
                 float angle = Vector3.Angle(targetDir, forward);
 
-                if(angle > 20.0)
+                if (angle > 20.0)
                 {
                     canAttack = false;
                 }
                 else
                 {
-                    if(distance < 20.0)
+                    if (distance < 20.0)
                     {
                         canAttack = true;
                     }
@@ -211,23 +310,34 @@ namespace CharacterSpace
                         canAttack = false;
                     }
                 }
+
+                //To Deselect an enemy
+                if (doubleClickTimer > 0)
+                {
+                    doubleClickTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    didDoubleClick = false;
+                }
             }
             //Attack
-            if(Input.GetKeyDown(KeyCode.B))
+            if (Input.GetKeyDown(KeyCode.B))
             {
                 //ToDo:make sure player is facing enemy and is in attack range
-                if(selectedUnit != null && canAttack)
+                if (selectedUnit != null && canAttack)
                 {
                     BasicAttack();
                 }
             }
 
             //Ranged Spell Attack
-            if(Input.GetKeyDown(KeyCode.M))
+            if (Input.GetKeyDown(KeyCode.M))
             {
-                if(selectedUnit != null)
+                if (selectedUnit != null)
                 {
-                    RangedSpell();
+                    //playerSpells.Find(x => x.name)
+                    //RangedSpell();
                 }
             }
         }
@@ -237,14 +347,34 @@ namespace CharacterSpace
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if(Physics.Raycast(ray, out hit, 10000))
+            if (Physics.Raycast(ray, out hit, 10000))
             {
-                if(hit.transform.CompareTag("Enemy"))
+                if (hit.transform.CompareTag("Enemy"))
                 {
-                    Debug.Log("Hit has occured");
                     selectedUnit = hit.transform.gameObject;
 
+                    selectedUnit.transform.GetComponent<EnemyStats>().Selected();
+
                     enemyStatsScript = selectedUnit.transform.gameObject.transform.GetComponent<EnemyStats>();
+
+                }
+            }
+            else
+            {
+                if (selectedUnit != null)
+                {
+                    if (didDoubleClick == false)
+                    {
+                        didDoubleClick = true;
+                        doubleClickTimer = 0.5f;
+                    }
+                    else
+                    {
+                        selectedUnit.transform.GetComponent<EnemyStats>().Deselected();
+                        selectedUnit = null;
+                        didDoubleClick = false;
+                        doubleClickTimer = 0;
+                    }
                 }
             }
         }
@@ -254,7 +384,12 @@ namespace CharacterSpace
             enemyStatsScript.ReceiveDamage(currentAttackPower);
         }
 
-        void RangedSpell()
+        void CastSpell()
+        {
+            //playerSpells.
+        }
+
+        /*void RangedSpell()
         {
             Vector3 spawnSpellLoc = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
 
@@ -262,6 +397,10 @@ namespace CharacterSpace
             clone = Instantiate(rangedSpellPrefab, spawnSpellLoc, Quaternion.identity);
             clone.GetComponent<RangedSpell>().target = selectedUnit;
             enemyStatsScript.ReceiveDamage(currentMagicAttackPower);
+        }*/
+        public void ReceiveDamage(float dmg)
+        {
+            currentHealth -= dmg;
         }
 
         public void AdjustingHealth()
@@ -272,6 +411,8 @@ namespace CharacterSpace
             }
             if (currentHealth < maxHealth)
             {
+                percentOfHp = currentHealth / maxHealth;
+                hpBarLength = percentOfHp * 100;
                 currentHealth += hpRegenAmount * Time.deltaTime;
             }
             if (currentHealth > maxHealth)
@@ -280,8 +421,41 @@ namespace CharacterSpace
             }
         }
 
+        public void AdjustingMana()
+        {
+
+        }
+
+        void UsedSpell(int id)
+        {
+            switch (id)
+            {
+                case 0:
+                    Debug.Log("Used spell 1");
+                    break;
+                case 1:
+                    Debug.Log("Used spell 2");
+                    break;
+                case 2:
+                    Debug.Log("Used spell 3");
+                    break;
+                case 3:
+                    Debug.Log("Used spell 4");
+                    break;
+                case 4:
+                    Debug.Log("Used spell 5");
+                    break;
+                default:
+                    Debug.Log("Spell Error");
+                    break;
+            }
+
+        }
 
 
+    
+
+      
 
         /*Listerner for the player exp*/
         public int PlayerSkillPointListener

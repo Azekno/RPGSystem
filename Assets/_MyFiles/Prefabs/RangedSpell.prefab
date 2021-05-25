@@ -4873,3 +4873,6 @@ MonoBehaviour:
   target: {fileID: 0}
   hitBox: 1
   spellSpeed: 20
+  spellRange: 2
+  spellPrefab: {fileID: 0}
+  spawnPoint: {fileID: 0}

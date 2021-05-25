@@ -22,17 +22,16 @@ namespace CharacterSpace
             childObj = transform.GetChild(0);
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            if (childObj.gameObject.activeSelf)
+            if(childObj.gameObject.activeSelf)
             {
-
-                if (collision.gameObject.CompareTag("Player"))
+                if(other.gameObject.CompareTag("Player"))
                 {
                     playerStats.exp += expGiven;
+                    DeactiveObject();
                 }
             }
-            DeactiveObject();
         }
 
         void ActivateObject()
