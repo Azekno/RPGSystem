@@ -85,7 +85,7 @@ public class UserCamera : MonoBehaviour
         if (!target)
             return;
 
-        Vector3 vTargetOffset3;
+        //Vector3 vTargetOffset3;
 
         // If either mouse buttons are down, let the mouse govern camera position 
         if (GUIUtility.hotControl == 0)

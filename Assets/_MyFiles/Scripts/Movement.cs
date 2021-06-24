@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    private float walkSpeed = 10.0f;
+    //private float walkSpeed = 10.0f;
     public float movementSpeed;
     public float jumpSpeed = 30.0f;
     private float rotateSpeed = 150.0f;
 
     public bool grounded;
     private Vector3 moveDirection = Vector3.zero;
-    private bool isWalking = false;
-    private string moveStatus = "idle";
+    //private bool isWalking = false;
+    //private string moveStatus = "idle";
 
     public GameObject camera1;
     public CharacterController controller;

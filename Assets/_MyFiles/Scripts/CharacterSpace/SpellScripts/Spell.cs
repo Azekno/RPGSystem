@@ -13,7 +13,7 @@ namespace CharacterSpace
         //public float activeTime;
         public KeyCode key;
 
-        public List<CharacterAttributes> affectedAttributes = new List<CharacterAttributes>();
+        //public List<CharacterAttributes> spellAffectedAttributes = new List<CharacterAttributes>();
         
         public abstract void Initialize(GameObject obj);
         public abstract void TriggerSpell();

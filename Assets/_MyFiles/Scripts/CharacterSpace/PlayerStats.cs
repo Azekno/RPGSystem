@@ -93,11 +93,11 @@ namespace CharacterSpace
 
         //Creates a list for the players stats
         [Header("Player Attributes")]
-        public List<CharacterAttributes> attributes = new List<CharacterAttributes>();
+        public List<Stat> attributes = new List<Stat>();
 
         //Creates a list to the resistances
         [Header("Player Resistances")]
-        public List<CharacterAttributes> resistance = new List<CharacterAttributes>();
+        public List<Stat> resistance = new List<Stat>();
 
         [Header("Player Skills Enabled")]
         public List<Skills> playerSkills = new List<Skills>();
@@ -138,20 +138,20 @@ namespace CharacterSpace
 
         void IncreaseAttributes()
         {
-            if (unassignedAttributes > 0)
+            /*if (unassignedAttributes > 0)
             {
-                List<CharacterAttributes>.Enumerator playerAttributes = attributes.GetEnumerator();
+                List<Stat>.Enumerator playerAttributes = attributes.GetEnumerator();
                 while (playerAttributes.MoveNext())
                 {
                     var currentAttribute = playerAttributes.Current;
-                    if (currentAttribute.attribute.name == this.name)
+                    if (currentAttribute.name == this.name)
                     {
-                        currentAttribute.baseValue += statIncreaseModifier;
-                        playerAttributes.Current.baseValue += currentAttribute.baseValue;
+                        currentAttribute.statValue += statIncreaseModifier;
+                        playerAttributes.Current.statValue += currentAttribute.statValue;
                         unassignedAttributes--;
                     }
                 }
-            }
+            }*/
         }
 
         void IncreaseSpellPoints()
@@ -202,18 +202,8 @@ namespace CharacterSpace
 
         private void Start()
         {
-            maxHealth = (baseHealth + (attributes.Find(xc => xc.attribute.name == "Vitality").baseValue * 10));
-            maxMana = (baseMana + (attributes.Find(x => x.attribute.name == "Wisdom").baseValue * 2)) / 2;
-            currentAttackPower = (baseAttackPower + (attributes.Find(x => x.attribute.name == "Strength").baseValue * 2)) / 2;
-            currentMagicAttackPower = (baseMagicAttackPower + (attributes.Find(x => x.attribute.name == "Intelligence").baseValue * 2)) / 2;
-            currentAttackSpeed = (baseAttackSpeed + (attributes.Find(x => x.attribute.name == "Dexterity").baseValue * 2)) / 2;
-            currentCritHitPercent = (baseCritHitPercent + (attributes.Find(x => x.attribute.name == "Agility").baseValue * 2)) / 4;
-
-            currentHealth = maxHealth;
-            currentMana = maxMana;
-
-            hpRegenAmount = (maxHealth + attributes.Find(x => x.attribute.name == "Vitality").baseValue) / 100;
             particle.Stop();
+
         }
 
         void Update()

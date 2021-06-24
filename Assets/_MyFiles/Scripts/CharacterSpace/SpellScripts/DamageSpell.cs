@@ -16,20 +16,20 @@ namespace CharacterSpace
         public bool isDamageOverTime;
 
         public float baseDamage;
-        public float currentDamage;
+        private float currentDamage;
         public float spellRange = 10f;
 
         public GameObject spellPrefab;
 
-
         void RangedSpell()
         {
+            currentDamage = (baseDamage * playerStats.currentMagicAttackPower) / 2;
             Vector3 spawnSpellLoc = new Vector3(playerStats.transform.position.x, playerStats.transform.position.y, playerStats.transform.position.z);
         
             GameObject clone;
             clone = Instantiate(spellPrefab, spawnSpellLoc, Quaternion.identity);
             clone.GetComponent<RangedSpell>().target = playerStats.selectedUnit;
-            enemyStatsScript.ReceiveDamage((playerStats.currentMagicAttackPower + currentDamage) / 2);
+            enemyStatsScript.ReceiveDamage(currentDamage);
         }
 
         public override void Initialize(GameObject obj)
@@ -39,7 +39,6 @@ namespace CharacterSpace
 
             //spellPrefab = obj;
             //spellPrefab.
-            
         }
 
         public override void TriggerSpell()

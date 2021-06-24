@@ -2,8 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealingSpell : MonoBehaviour
+public class BuffSpell : MonoBehaviour
 {
+    enum BuffEffectType
+    {
+        STRUp,
+        VITUP,
+        AGIUp,
+        DEXUp,
+        INTUp,
+        WISUp,
+        CHAUp,
+        CHAOsUp,
+    }
+
     // Start is called before the first frame update
     void Start()
     {

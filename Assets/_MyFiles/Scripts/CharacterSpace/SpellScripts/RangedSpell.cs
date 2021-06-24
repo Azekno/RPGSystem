@@ -9,7 +9,7 @@ public class RangedSpell : MonoBehaviour
     private Transform targetTransform;
     public float hitBox = 2;
     public float spellSpeed = 30;
-    public float spellRange = 2f;
+    public float spellRange;
 
     //public GameObject spellPrefab;
     //public Transform spawnPoint;

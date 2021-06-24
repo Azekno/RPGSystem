@@ -11,12 +11,31 @@ namespace CharacterSpace
 
         public string description;
         public Sprite icon;
+        //This spell will be either a buff or a debuff
         public bool isBuff;
-        public bool isDebuff;
+
+        public GameObject spellPrefab;
+
+        public void BuffMagic()
+        {
+
+        }
+
+        public void DeBuffMagic()
+        {
+
+        }
 
         public override void Initialize(GameObject obj)
         {
-            //spellPrefab = obj.GetComponent<RangedSpell>();
+            if(isBuff)
+            {
+                //spellPrefab.GetComponent<BuffSpell>(). = obj.GetComponent<BuffSpell>();
+            }
+            else
+            {
+                //spellPrefab.GetComponent<DebuffSpell>()
+            }
             //spellPrefab
             //spellPrefab.
 

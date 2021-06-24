@@ -88,13 +88,13 @@ namespace CharacterSpace
             while(skillAttributes.MoveNext())
             {
                 //List through the Players attributes and match with Skill attribute
-                List<CharacterAttributes>.Enumerator playerAttributes = player.attributes.GetEnumerator();
+                List<Stat>.Enumerator playerAttributes = player.attributes.GetEnumerator();
                 while(playerAttributes.MoveNext())
                 {
-                    if(skillAttributes.Current.attribute.name.ToString() == playerAttributes.Current.attribute.name.ToString())
+                    if(skillAttributes.Current.attribute.name.ToString() == playerAttributes.Current.name.ToString())
                     {
                         //update the players attributes
-                        playerAttributes.Current.baseValue += skillAttributes.Current.baseValue;
+                        playerAttributes.Current.statValue += skillAttributes.Current.baseValue;
                         //mark that an attribute was updated
                         i++;
                     }
