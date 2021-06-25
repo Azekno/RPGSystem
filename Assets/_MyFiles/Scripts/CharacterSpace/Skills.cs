@@ -88,7 +88,7 @@ namespace CharacterSpace
             while(skillAttributes.MoveNext())
             {
                 //List through the Players attributes and match with Skill attribute
-                List<Stat>.Enumerator playerAttributes = player.attributes.GetEnumerator();
+                List<Stat>.Enumerator playerAttributes = player.stats.GetEnumerator();
                 while(playerAttributes.MoveNext())
                 {
                     if(skillAttributes.Current.attribute.name.ToString() == playerAttributes.Current.name.ToString())

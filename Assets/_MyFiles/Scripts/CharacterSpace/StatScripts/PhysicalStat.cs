@@ -6,31 +6,39 @@ namespace CharacterSpace
 
     public class PhysicalStat : Stat
     {
-        public GameObject player;
-
         public bool isAttack = false;
         public bool isDefense = false;
         public bool isAgility = false;
-        public float statMultiplier = 10;
-        private float attkValue;
-        private float tempHealthValue;
+        public bool affectsHealthRegen = false;
 
-        public override void Initialize()
+        public float statMultiplier = 10;
+        private float physValue = 0;
+        //private float tempHealthValue;
+
+        public override void Initialize(GameObject obj)
         {
-            attkValue = statValue * statMultiplier;
-            tempHealthValue = (statValue * statMultiplier);
+            physValue = statValue * statMultiplier;
+            //tempHealthValue = (statValue * statMultiplier);
+            if(affectsHealth)
+            {
+                //obj.GetComponent<PlayerStats>().maxHealth += tempHealthValue;
+                obj.GetComponent<PlayerStats>().maxHealth += physValue;
+            }
             if (isAttack)
             {
-                player.GetComponent<PlayerStats>().currentAttackPower += attkValue;
+                obj.GetComponent<PlayerStats>().currentAttackPower += physValue;
             }
-            else if(affectsHealth)
+            if(isAgility)
             {
-                player.GetComponent<PlayerStats>().baseHealth += tempHealthValue;
-                player.GetComponent<PlayerStats>().currentHealth += tempHealthValue;
+                obj.GetComponent<PlayerStats>().currentAttackSpeed += physValue / 2;
             }
-            else if(isAgility)
+            if(isDefense)
             {
-
+                obj.GetComponent<PlayerStats>().currentPhysicalDefense += statValue;
+            }
+            if(affectsHealthRegen)
+            {
+                obj.GetComponent<PlayerStats>().hpRegenAmount += (obj.GetComponent<PlayerStats>().maxHealth + physValue)/ 100;
             }
         }
     }

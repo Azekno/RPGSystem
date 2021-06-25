@@ -9,17 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29d1f593de9805d4fbf6e33bfed04694, type: 3}
-  m_Name: TestStr
+  m_Script: {fileID: 11500000, guid: b6a9bc38345bd9e4b81e2c30fab632bf, type: 3}
+  m_Name: INT
   m_EditorClassIdentifier: 
-  name: Strength
-  description: The strength of a character. Affects physical damage
+  name: Intelligence
+  description: Increases magic attack
   thumbnail: {fileID: 0}
-  statValue: 10
-  affectsHealth: 1
+  statValue: 5
+  affectsHealth: 0
   affectsMana: 0
-  player: {fileID: 4280339904003768849, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
-  isAttack: 0
-  isDefense: 0
-  isAgility: 0
+  isMagAttk: 1
+  isMagDef: 0
+  affectsManaRegen: 0
   statMultiplier: 10

@@ -3907,9 +3907,49 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: stats.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
       propertyPath: attributes.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: a3167893d152f174595a1b7b12abf580, type: 2}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: stats.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: a3167893d152f174595a1b7b12abf580, type: 2}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: stats.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: a6f4109626fff7543af76117239b554c, type: 2}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: currentMana
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: maxMana
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: maxHealth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: baseMana
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: stats.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5276c6d6c74976b4da2fafc673732470, type: 2}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: stats.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0e11de412b7d9e748b524fbc5606a82c, type: 2}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: stats.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ed6fe3fc3d37764e8857770afed6c47, type: 2}
     - target: {fileID: 4280339904003768859, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
       propertyPath: camera1
       value: 

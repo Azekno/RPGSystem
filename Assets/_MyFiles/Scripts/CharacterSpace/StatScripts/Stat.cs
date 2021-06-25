@@ -21,7 +21,7 @@ namespace CharacterSpace
 
         //public List<CharacterAttributes> spellAffectedAttributes = new List<CharacterAttributes>();
 
-        public abstract void Initialize();
+        public abstract void Initialize(GameObject obj);
         //public abstract void TriggerSpell();
     }
 }

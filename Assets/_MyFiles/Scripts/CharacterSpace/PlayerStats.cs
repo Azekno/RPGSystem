@@ -15,27 +15,32 @@ namespace CharacterSpace
 
         public float baseHealth = 100;
         public float currentHealth;
-        [SerializeField]
-        private float maxHealth;
+        
+        [HideInInspector]
+        public float maxHealth;
 
         public float baseMana = 100;
         public float currentMana;
-        [SerializeField]
-        private float maxMana;
+        
+        [HideInInspector]
+        public float maxMana;
 
-        public float baseAttackPower;
+        //public float baseAttackPower;
         public float currentAttackPower;
-        public float baseAttackSpeed;
+        //public float baseAttackSpeed;
         public float currentAttackSpeed;
         //public float baseDodge;
         //public float currentDodge;
-        public float baseCritHitPercent;
-        public float currentCritHitPercent;
+        //public float baseCritHitPercent;
+        //public float currentCritHitPercent;
 
-        public float baseMagicAttackPower;
+        //public float baseMagicAttackPower;
         public float currentMagicAttackPower;
-        public float spellCastTimer;
 
+        public float currentPhysicalDefense;
+        public float currentMagicDefense;
+
+        public float spellCastTimer;
         public float hpRegenTimer;
         public float hpRegenAmount;
         public float manaRegenTimer;
@@ -92,8 +97,10 @@ namespace CharacterSpace
         public bool PlayerSpellShowMenu;
 
         //Creates a list for the players stats
-        [Header("Player Attributes")]
-        public List<Stat> attributes = new List<Stat>();
+        [Header("Player Stats")]
+        public List<Stat> stats = new List<Stat>();
+
+        //public List<CharacterAttributes> attributes = new List<CharacterAttributes>();
 
         //Creates a list to the resistances
         [Header("Player Resistances")]
@@ -127,10 +134,12 @@ namespace CharacterSpace
             exp -= nextLevelXP;
             unassignedAttributes += levelUpAttributeModifier;
             unassignedSkillPoints += levelSkillPointModifier;
+
             maxHealth += healthLevelModifier;
             maxMana += manaLevelModifier;
             currentHealth = maxHealth;
             currentMana = maxMana;
+            
             IncreaseSpellPoints();
             particle.Play();
 
@@ -203,7 +212,19 @@ namespace CharacterSpace
         private void Start()
         {
             particle.Stop();
-
+            maxHealth = baseHealth;
+            maxMana = baseMana;
+            
+            foreach(Stat stat in stats)
+            {
+                stat.Initialize(gameObject);
+            }
+            currentHealth = maxHealth;
+            currentMana = maxMana;
+            //for(int i = 0; i < stats.Count; i++)
+            //{
+            //    stats[i].Initialize(gameObject);
+            //}
         }
 
         void Update()
@@ -379,15 +400,6 @@ namespace CharacterSpace
             //playerSpells.
         }
 
-        /*void RangedSpell()
-        {
-            Vector3 spawnSpellLoc = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-
-            GameObject clone;
-            clone = Instantiate(rangedSpellPrefab, spawnSpellLoc, Quaternion.identity);
-            clone.GetComponent<RangedSpell>().target = selectedUnit;
-            enemyStatsScript.ReceiveDamage(currentMagicAttackPower);
-        }*/
         public void ReceiveDamage(float dmg)
         {
             currentHealth -= dmg;
