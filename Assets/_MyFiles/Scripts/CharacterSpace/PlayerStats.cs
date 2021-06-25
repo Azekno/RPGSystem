@@ -174,8 +174,11 @@ namespace CharacterSpace
             //Hp and Mana Bars
             //Textures
             GUI.DrawTexture(new Rect(20, 30, 120, 70), toolTipBackgroundTexture);
-            GUI.DrawTexture(new Rect(30, 40, hpBarLength, 20), hpBarTexture);
-            GUI.DrawTexture(new Rect(30, 65, manaBarLength, 20), manaBarTexture);
+            /*GUI.DrawTexture(new Rect(30, 40, hpBarLength, 20), hpBarTexture);
+            GUI.DrawTexture(new Rect(30, 65, manaBarLength, 20), manaBarTexture);*/
+            GUI.DrawTexture(new Rect(30, 40, 100, 20), hpBarTexture);
+            GUI.DrawTexture(new Rect(30, 65, 100, 20), manaBarTexture);
+
             GUI.Label(new Rect(50, 40, 200, 20), "" + currentHealth + " / " + maxHealth);
             GUI.Label(new Rect(50, 65, 200, 20), "" + currentMana + " / " + maxMana);
 

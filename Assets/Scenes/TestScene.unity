@@ -2974,7 +2974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -3950,6 +3950,14 @@ PrefabInstance:
       propertyPath: stats.Array.data[4]
       value: 
       objectReference: {fileID: 11400000, guid: 8ed6fe3fc3d37764e8857770afed6c47, type: 2}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: hpBarTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 555d025117735004da487190aa4c7da0, type: 3}
+    - target: {fileID: 4280339904003768857, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
+      propertyPath: toolTipBackgroundTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 207a1ed12b1591d46a2de2812f7bf7ff, type: 3}
     - target: {fileID: 4280339904003768859, guid: 28855d149ac51ba44b0c4f4ec0bb44b6, type: 3}
       propertyPath: camera1
       value: 
