@@ -99,6 +99,7 @@
     <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\PlayerStats.cs" />
     <Compile Include="Assets\_MyFiles\Scripts\StatMenu.cs" />
     <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\SkillDisplay.cs" />
+    <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\StatMenuScript.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\ImportedAssets\Pixel Art Icon Pack - RPG\Shader\SH UI Icon Outline Color.shader" />
