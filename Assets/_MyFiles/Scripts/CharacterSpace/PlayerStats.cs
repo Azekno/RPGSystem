@@ -50,7 +50,7 @@ namespace CharacterSpace
         public float expExponent = 1;
         public float baseExpValue = 100;
 
-        public int unassignedAttributes = 0;
+        public int unassignedStatPoints = 0;
         public int unassignedSkillPoints = 0;
         public int unassignedSpellPoints = 0;
 
@@ -59,7 +59,7 @@ namespace CharacterSpace
         //The mana level modifier is just how much mana is increased upon level up.
         public int manaLevelModifier = 10;
         //The amount of attributes gained when the player levels
-        public int levelUpAttributeModifier = 2;
+        public int levelUpStatPointsModifier = 2;
         //Skill points gained upon level
         public int levelSkillPointModifier = 1;
         //Spell points gained upon level
@@ -94,7 +94,10 @@ namespace CharacterSpace
 
 
         //Player Menus
-        public bool PlayerSpellShowMenu;
+        public bool displayPlayerUI = true;
+        public bool displayStats = false;
+        public bool displaySkills = false;
+        public bool displaySpells = false;
 
         //Creates a list for the players stats
         [Header("Player Stats")]
@@ -132,7 +135,7 @@ namespace CharacterSpace
         {
             level++;
             exp -= nextLevelXP;
-            unassignedAttributes += levelUpAttributeModifier;
+            unassignedStatPoints += levelUpStatPointsModifier;
             unassignedSkillPoints += levelSkillPointModifier;
 
             maxHealth += healthLevelModifier;
@@ -171,20 +174,23 @@ namespace CharacterSpace
 
         private void OnGUI()
         {
-            //Hp and Mana Bars
-            //Textures
-            GUI.DrawTexture(new Rect(20, 30, 120, 70), toolTipBackgroundTexture);
-            /*GUI.DrawTexture(new Rect(30, 40, hpBarLength, 20), hpBarTexture);
-            GUI.DrawTexture(new Rect(30, 65, manaBarLength, 20), manaBarTexture);*/
-            GUI.DrawTexture(new Rect(30, 40, 100, 20), hpBarTexture);
-            GUI.DrawTexture(new Rect(30, 65, 100, 20), manaBarTexture);
+            if (displayPlayerUI)
+            {
+                //Hp and Mana Bars
+                //Textures
+                GUI.DrawTexture(new Rect(20, 30, 120, 70), toolTipBackgroundTexture);
+                /*GUI.DrawTexture(new Rect(30, 40, hpBarLength, 20), hpBarTexture);
+                GUI.DrawTexture(new Rect(30, 65, manaBarLength, 20), manaBarTexture);*/
+                GUI.DrawTexture(new Rect(30, 40, 100, 20), hpBarTexture);
+                GUI.DrawTexture(new Rect(30, 65, 100, 20), manaBarTexture);
 
-            GUI.Label(new Rect(50, 40, 200, 20), "" + currentHealth + " / " + maxHealth);
-            GUI.Label(new Rect(50, 65, 200, 20), "" + currentMana + " / " + maxMana);
+                GUI.Label(new Rect(50, 40, 200, 20), "" + currentHealth + " / " + maxHealth);
+                GUI.Label(new Rect(50, 65, 200, 20), "" + currentMana + " / " + maxMana);
+            }
 
 
             //Tooltip spell buttons
-            Rect rect1 = new Rect(Screen.width / 2, Screen.height - 64, 32, 32);
+            //Rect rect1 = new Rect(Screen.width / 2, Screen.height - 64, 32, 32);
 
             //if (GUI.Button(new Rect(Screen.width / 2, Screen.height - 64, 32, 32), "5"));
             //{
@@ -199,12 +205,33 @@ namespace CharacterSpace
             //        "Spell id: " + playerTestSpells[0].id);
             //}
 
-            //Spell Menu Button
-            if (GUI.Button(new Rect(50, Screen.height - 64, 32, 64), "Player Spells Menu Button"))
+            //Stat Menu Button
+            if(GUI.Button(new Rect(50, Screen.height - 64, 100, 64), "Stat Menu"))
             {
-                PlayerSpellShowMenu = !PlayerSpellShowMenu;
+                displayStats = !displayStats;
+                if (displayPlayerUI)
+                {
+                    displayPlayerUI = !displayPlayerUI;
+                }
             }
-
+            //Skill Menu Button
+            if(GUI.Button(new Rect(150, Screen.height - 64, 100, 64), "Skill Menu"))
+            {
+                displaySkills = !displaySkills;
+                if(displayPlayerUI)
+                {
+                    displayPlayerUI = !displayPlayerUI;
+                }
+            }
+            //Spell Menu Button
+            if (GUI.Button(new Rect(250, Screen.height - 64, 100, 64), "Spells Menu"))
+            {
+                displaySpells = !displaySpells;
+                if (displayPlayerUI)
+                {
+                    displayPlayerUI = !displayPlayerUI;
+                }
+            }
             /*//player spell menu
             if(PlayerSpellShowMenu)
             {

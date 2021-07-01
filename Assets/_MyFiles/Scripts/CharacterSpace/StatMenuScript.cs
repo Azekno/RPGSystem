@@ -23,12 +23,6 @@ namespace CharacterSpace
             currentStats = playerStats.stats;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         public void IncreaseSelectedStat()
         {
             playerStats.unassignedStatPoints -= statConsumption;
