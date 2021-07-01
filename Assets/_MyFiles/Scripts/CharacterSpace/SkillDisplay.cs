@@ -24,7 +24,7 @@ namespace CharacterSpace
         // Start is called before the first frame update
         void Start()
         {
-            playerHandler = this.GetComponentInParent<PlayerHandler>().player;
+            playerHandler = this.GetComponentInParent<PlayerHandler>().playerStats;
             //Listener for the skill point change
             playerHandler.onSkillPointChange += ReactToChange;
             //Listener for the level change

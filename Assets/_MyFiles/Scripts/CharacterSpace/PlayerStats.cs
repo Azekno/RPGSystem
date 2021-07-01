@@ -81,23 +81,10 @@ namespace CharacterSpace
 
         public GameObject rangedSpellPrefab;
 
-        //Texture
-        public Texture hpBarTexture;
-        public Texture manaBarTexture;
-        public Texture toolTipBackgroundTexture;
-
-        //User GUI Bars stats
-        public float hpBarLength;
+        //public float hpBarLength;
         public float percentOfHp;
-        public float manaBarLength;
+        //public float manaBarLength;
         public float percentOfMana;
-
-
-        //Player Menus
-        public bool displayPlayerUI = true;
-        public bool displayStats = false;
-        public bool displaySkills = false;
-        public bool displaySpells = false;
 
         //Creates a list for the players stats
         [Header("Player Stats")]
@@ -172,73 +159,6 @@ namespace CharacterSpace
 
         }
 
-        private void OnGUI()
-        {
-            if (displayPlayerUI)
-            {
-                //Hp and Mana Bars
-                //Textures
-                GUI.DrawTexture(new Rect(20, 30, 120, 70), toolTipBackgroundTexture);
-                /*GUI.DrawTexture(new Rect(30, 40, hpBarLength, 20), hpBarTexture);
-                GUI.DrawTexture(new Rect(30, 65, manaBarLength, 20), manaBarTexture);*/
-                GUI.DrawTexture(new Rect(30, 40, 100, 20), hpBarTexture);
-                GUI.DrawTexture(new Rect(30, 65, 100, 20), manaBarTexture);
-
-                GUI.Label(new Rect(50, 40, 200, 20), "" + currentHealth + " / " + maxHealth);
-                GUI.Label(new Rect(50, 65, 200, 20), "" + currentMana + " / " + maxMana);
-            }
-
-
-            //Tooltip spell buttons
-            //Rect rect1 = new Rect(Screen.width / 2, Screen.height - 64, 32, 32);
-
-            //if (GUI.Button(new Rect(Screen.width / 2, Screen.height - 64, 32, 32), "5"));
-            //{
-            //    UsedSpell(playerTestSpells[0].id);
-            //}
-            //if(rect1.Contains(Event.current.mousePosition))
-            //{
-            //    GUI.DrawTexture(new Rect(Input.mousePosition.x + 20, Screen.height - Input.mousePosition.y - 150, 200, 200), toolTipBackgroundTexture);
-            //    GUI.Label(new Rect(Input.mousePosition.x + 20, Screen.height - Input.mousePosition.y - 150, 200, 200),
-            //        "Spell name: " + playerTestSpells[0].name + "\n" +
-            //        "Spell description: " + playerTestSpells[0].description + "\n" +
-            //        "Spell id: " + playerTestSpells[0].id);
-            //}
-
-            //Stat Menu Button
-            if(GUI.Button(new Rect(50, Screen.height - 64, 100, 64), "Stat Menu"))
-            {
-                displayStats = !displayStats;
-                if (displayPlayerUI)
-                {
-                    displayPlayerUI = !displayPlayerUI;
-                }
-            }
-            //Skill Menu Button
-            if(GUI.Button(new Rect(150, Screen.height - 64, 100, 64), "Skill Menu"))
-            {
-                displaySkills = !displaySkills;
-                if(displayPlayerUI)
-                {
-                    displayPlayerUI = !displayPlayerUI;
-                }
-            }
-            //Spell Menu Button
-            if (GUI.Button(new Rect(250, Screen.height - 64, 100, 64), "Spells Menu"))
-            {
-                displaySpells = !displaySpells;
-                if (displayPlayerUI)
-                {
-                    displayPlayerUI = !displayPlayerUI;
-                }
-            }
-            /*//player spell menu
-            if(PlayerSpellShowMenu)
-            {
-                //show player spell menu for spells learned
-            }*/
-        }
-
         private void Start()
         {
             particle.Stop();
@@ -278,8 +198,8 @@ namespace CharacterSpace
             if (currentHealth < maxHealth)
             {
                 percentOfHp = currentHealth / maxHealth;
-                hpBarLength = percentOfHp * 100;
-                currentHealth += hpRegenAmount * Time.deltaTime;
+                //hpBarLength = percentOfHp * 100;
+                //currentHealth += hpRegenAmount * Time.deltaTime;
             }
             if (currentHealth > maxHealth)
             {
@@ -293,7 +213,7 @@ namespace CharacterSpace
             if (currentMana < maxHealth)
             {
                 percentOfMana = currentMana / maxMana;
-                manaBarLength = percentOfMana * 100;
+                //manaBarLength = percentOfMana * 100;
                 currentMana += manaRegenAmount * Time.deltaTime;
             }
             if (currentMana > maxMana)
@@ -444,7 +364,7 @@ namespace CharacterSpace
             if (currentHealth < maxHealth)
             {
                 percentOfHp = currentHealth / maxHealth;
-                hpBarLength = percentOfHp * 100;
+                //hpBarLength = percentOfHp * 100;
                 currentHealth += hpRegenAmount * Time.deltaTime;
             }
             if (currentHealth > maxHealth)
