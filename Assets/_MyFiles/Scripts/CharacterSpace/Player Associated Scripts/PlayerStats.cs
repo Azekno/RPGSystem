@@ -97,7 +97,7 @@ namespace CharacterSpace
         public List<Stat> resistance = new List<Stat>();
 
         [Header("Player Skills Enabled")]
-        public List<Skills> playerSkills = new List<Skills>();
+        //public List<Skills> playerSkills = new List<Skills>();
 
         [Header("Player Spells Enabled")]
         public List<Spell> playerSpells = new List<Spell>();

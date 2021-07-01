@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿/*using System.Collections.Generic;
 using UnityEngine;
 
 namespace CharacterSpace
@@ -11,7 +11,8 @@ namespace CharacterSpace
         public int levelNeeded;
         public int skillPointsNeeded;
 
-        public List<CharacterAttributes> affectedAttributes = new List<CharacterAttributes>();
+        //public List<CharacterAttributes> affectedAttributes = new List<CharacterAttributes>();
+        public List<Stat> affectedAttributes = new List<Stat>();
 
         public void SetValues(GameObject skillDisplayObject, PlayerStats player)
         {
@@ -41,13 +42,13 @@ namespace CharacterSpace
                 {
                     skillDisplay.skillPointsNeeded.text = skillPointsNeeded.ToString();
                 }
-                if(skillDisplay.skillAttribute)
-                {
-                    skillDisplay.skillAttribute.text = affectedAttributes[0].attribute.ToString();
-                }
+                //if(skillDisplay.skillAttribute)
+                //{
+                //    skillDisplay.skillAttribute.text = affectedAttributes[0].;
+                //}
                 if(skillDisplay.skillAttributeAmount)
                 {
-                    skillDisplay.skillAttributeAmount.text = "+" + affectedAttributes[0].baseValue.ToString();
+                    skillDisplay.skillAttributeAmount.text = "+" + affectedAttributes[0].statValue.ToString();
                 }
             }
         }
@@ -112,3 +113,4 @@ namespace CharacterSpace
         }
     }
 }
+*/

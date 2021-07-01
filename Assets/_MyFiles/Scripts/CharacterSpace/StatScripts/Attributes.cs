@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 
 namespace CharacterSpace
 {
@@ -10,4 +10,4 @@ namespace CharacterSpace
         public string description;
         public Sprite thumbnail;
     }
-}
+}*/

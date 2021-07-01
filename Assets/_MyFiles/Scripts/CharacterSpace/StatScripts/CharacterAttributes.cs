@@ -1,4 +1,4 @@
-﻿namespace CharacterSpace
+﻿/*namespace CharacterSpace
 {
     [System.Serializable]
     public class CharacterAttributes
@@ -18,3 +18,4 @@
         }
     }
 }
+*/
