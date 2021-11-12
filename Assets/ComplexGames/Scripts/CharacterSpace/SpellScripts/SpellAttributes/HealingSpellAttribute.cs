@@ -7,21 +7,21 @@ namespace CharacterSpace
     [CreateAssetMenu(menuName = "RPG Generator/Player/Create Spell/Healing Spell")]
     public class HealingSpellAttribute : Spell
     {
+        public GameObject spellPrefab;
         public string description;
         public Sprite icon;
         public bool isAOE;
         public bool isHealOverTime;
 
-        public int healingAbility;
+        public int healingAmount;
 
-        public GameObject spellPrefab;
 
-        public void SingleTargetHealing()
+        public void SingleTargetHealing(GameObject obj)
         {
-            //spellPrefab
+            spellPrefab.GetComponent<HealingSpell>().SingleHealing(obj, healingAmount);
         }
 
-        public void AOEHeal()
+        /*public void AOEHeal()
         {
 
         }
@@ -32,31 +32,39 @@ namespace CharacterSpace
         public void AOEHealOverTime()
         {
 
-        }
+        }*/
 
         public override void TriggerSpell(GameObject obj)
         {
+            //spellPrefab.GetComponent<HealingSpell>();
+
+            Vector3 spawnSpellLoc = new Vector3(obj.transform.position.x, obj.transform.position.y, obj.transform.position.z);
+
+            GameObject clone;
+            clone = Instantiate(spellPrefab, spawnSpellLoc, Quaternion.identity);
+            //clone.GetComponent<HealingSpell>().player = obj;
+            clone.GetComponent<HealingSpell>().target = obj.GetComponent<PlayerStats>().selectedUnit;
             if (!isHealOverTime)
             {
                 if (!isAOE)
                 {
-                    SingleTargetHealing();
+                    SingleTargetHealing(obj);
                 }
                 else
                 {
-                    AOEHeal();
+                    //AOEHeal();
                 }
             }
             else
             {
-                if (!isAOE)
+                /*if (!isAOE)
                 {
                     SingleTargetHealOverTime();
                 }
                 else
                 {
                     AOEHealOverTime();
-                }
+                }*/
             }
         }
 
