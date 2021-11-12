@@ -11,7 +11,7 @@ public class DebuffSpell : MonoBehaviour
         Dizziness,
         Heaviness,
     }
-
+    /*
     // Start is called before the first frame update
     void Start()
     {
@@ -22,5 +22,5 @@ public class DebuffSpell : MonoBehaviour
     void Update()
     {
         
-    }
+    }*/
 }

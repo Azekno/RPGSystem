@@ -25,7 +25,7 @@ public class RangedSpell : MonoBehaviour
     void Update()
     {
         ///If the target isn't null, the spell will do a distacne check and begin 'chasing' the target before entering the hitbox which will call the hitTarget function
-        if(target != null)
+        if(target != null && target != player)
         {
             Vector3 targetPosition = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
             this.transform.LookAt(targetPosition);
@@ -49,6 +49,7 @@ public class RangedSpell : MonoBehaviour
     void SpellDamage()
     {
         currentSpellDamage = baseSpellDamage * (player.GetComponent<PlayerStats>().currentMagicAttackPower) / 4;
+        Debug.Log("Dealt " + currentSpellDamage + " spell damage to the enemy");
         enemy.ReceiveDamage(currentSpellDamage);
     }
 

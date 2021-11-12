@@ -15,7 +15,7 @@ public class BuffSpell : MonoBehaviour
         CHAUp,
         CHAOsUp,
     }
-
+/*
     // Start is called before the first frame update
     void Start()
     {
@@ -26,5 +26,5 @@ public class BuffSpell : MonoBehaviour
     void Update()
     {
         
-    }
+    }*/
 }
