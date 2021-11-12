@@ -56,22 +56,30 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_MyFiles\Scripts\UI.cs" />
-    <Compile Include="Assets\_MyFiles\Scripts\SimpleCameraController.cs" />
-    <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\Skills.cs" />
-    <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\BaseStats.cs" />
-    <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\CharacterAttributes.cs" />
-    <Compile Include="Assets\_MyFiles\Scripts\ExpPacket.cs" />
-    <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\Attributes.cs" />
-    <Compile Include="Assets\_MyFiles\Scripts\EnemyScript.cs" />
-    <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\IncreaseStats.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\SpellScripts\SpellAttributes\SpellHolder.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\Player Associated Scripts\Movement.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\SpellScripts\SpellAttributes\DamageSpell.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\SpellScripts\Spells\HealingSpell.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\Player Associated Scripts\PlayerHandler.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\SpellScripts\Spells\DebuffSpell.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\StatScripts\PhysicalStat.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\SpellScripts\Spells\BuffSpell.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\GameSetting\GameManager.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\Camera\UserCamera.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\SpellScripts\SpellAttributes\HealingSpellAttribute.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\GameSetting\SpellManager.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\Other\ExpPacket.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\StatScripts\MagicalStat.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\Enemy\EnemyStats.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\UI\StatUIDisplay.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\StatScripts\Stat.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\SpellScripts\SpellAttributes\StatusEffect.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\SpellScripts\Spells\RangedSpell.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\_MyFiles\Scripts\Spells.cs" />
-    <Compile Include="Assets\_MyFiles\Scripts\CharacterSpace\PlayerStats.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\SpellScripts\SpellAttributes\Spell.cs" />
+    <Compile Include="Assets\ComplexGames\Scripts\CharacterSpace\Player Associated Scripts\PlayerStats.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\ImportedAssets\Pixel Art Icon Pack - RPG\Shader\SH UI Icon Outline Color.shader" />
-     <None Include="Assets\ImportedAssets\Pixel Art Icon Pack - RPG\Shader\SH Sprite Icon Outline Color.shader" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Program_Files\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
