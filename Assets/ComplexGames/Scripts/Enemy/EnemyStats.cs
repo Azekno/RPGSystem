@@ -19,7 +19,7 @@ public class EnemyStats : MonoBehaviour
     public bool isDead = false;
     public bool isMultiplayer = false;
 
-    public bool inCombat;
+    /*public bool inCombat;
     public float wanderTime;
     public float movementSpeed;
 
@@ -31,12 +31,12 @@ public class EnemyStats : MonoBehaviour
     public int attackDamageMin;
     public int attackDamageMax;
     public float attackCooldownTimeMain;
-    public float attackCooldownTime;
+    public float attackCooldownTime;*/
 
-    //Shaders
+    /*//Shaders
     public Shader shader1;
     public Shader shader2;
-    public Renderer rend;
+    public Renderer rend;*/
 
     private void Awake()
     {
@@ -55,7 +55,7 @@ public class EnemyStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isDead)
+        /*if (!isDead)
         {
             if (isMultiplayer)
             {
@@ -75,7 +75,7 @@ public class EnemyStats : MonoBehaviour
                 WanderAround();
                 SearchForTarget();
             }
-        }
+        }*/
 
         if (currentHp < 0)
         {
@@ -93,7 +93,7 @@ public class EnemyStats : MonoBehaviour
         }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// The enemy will move around in a direction for a set amount of time before determining a new wander direction;
     /// </summary>
     void WanderAround()
@@ -168,9 +168,9 @@ public class EnemyStats : MonoBehaviour
                 AttackTarget();
             }
         }
-    }
+    }*/
 
-    /// <summary>
+    /*/// <summary>
     /// For attacking the player, the enemy has the potential to attack the player multiple times based on the random number generated.
     /// </summary>
     public void AttackTarget()
@@ -189,7 +189,7 @@ public class EnemyStats : MonoBehaviour
         {
             target.transform.GetComponent<PlayerStats>().ReceiveDamage(Random.Range(attackDamageMin, attackDamageMax));
         }
-    }
+    }*/
 
     public void ReceiveDamage(float dmg)
     {
@@ -206,7 +206,7 @@ public class EnemyStats : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
@@ -215,10 +215,10 @@ public class EnemyStats : MonoBehaviour
             //transform.rotation = Quaternion.Euler(0f, 180 * movementSpeed * Time.deltaTime, 0f);
             //movementSpeed *= -1;
         }
-    }
+    }*/
 
     //Can have a bool as an arguement to determine how to select and deselect instead of two separate functions
-    public void Selected()
+    /*public void Selected()
     {
         rend.material.shader = shader2;
     }
@@ -226,5 +226,5 @@ public class EnemyStats : MonoBehaviour
     public void Deselected()
     {
         rend.material.shader = shader1;
-    }
+    }*/
 }
