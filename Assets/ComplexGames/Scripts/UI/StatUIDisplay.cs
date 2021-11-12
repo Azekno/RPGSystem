@@ -34,12 +34,14 @@ namespace CharacterSpace
         {
             if (player.unassignedStatPoints != 0)
             {
-                player.tempDictionary[stat] += 1;
+                //player.tempDictionary = player.statDictionary;
+                player.statDictionary[stat] += 1;
                 currStatValue.text = player.GetStatValue(stat).ToString();
 
                 player.unassignedStatPoints -= 1;
                 unallocatedStats.text = player.unassignedStatPoints.ToString();
                 player.statIncreased = true;
+                stat.statChanged = true;
             }
         }
     }

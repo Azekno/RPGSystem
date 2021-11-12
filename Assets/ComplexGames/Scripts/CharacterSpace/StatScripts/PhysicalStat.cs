@@ -21,23 +21,24 @@ namespace CharacterSpace
         {
             physValue = obj.GetComponent<PlayerStats>().baseStatValue * statMultiplier;
 
-            if(affectsHealth)
+            if (affectsHealth && statChanged)
             {
                 obj.GetComponent<PlayerStats>().maxHealth += physValue;
             }
-            if (isAttack)
+            if (isAttack && statChanged)
             {
-                obj.GetComponent<PlayerStats>().currentAttackPower += physValue;
+                obj.GetComponent<PlayerStats>().currentAttackPower += physValue / 20;
             }
-            if(isAgility)
+            if(isAgility && statChanged)
             {
-                obj.GetComponent<PlayerStats>().currentAttackSpeed += physValue / 2;
+                obj.GetComponent<PlayerStats>().currentAttackSpeed += physValue / 100;
             }
-            if(isDefense)
+            if(isDefense && statChanged)
             {
-                obj.GetComponent<PlayerStats>().currentPhysicalDefense += obj.GetComponent<PlayerStats>().baseStatValue;
+                //obj.GetComponent<PlayerStats>().currentPhysicalDefense += obj.GetComponent<PlayerStats>().baseStatValue;
+                obj.GetComponent<PlayerStats>().currentPhysicalDefense += physValue / 20;
             }
-            if(affectsHealthRegen)
+            if(affectsHealthRegen && statChanged)
             {
                 obj.GetComponent<PlayerStats>().hpRegenAmount += (obj.GetComponent<PlayerStats>().maxHealth + physValue)/ 100;
             }

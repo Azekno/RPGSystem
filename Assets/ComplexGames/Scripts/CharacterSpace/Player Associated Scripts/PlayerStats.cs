@@ -69,6 +69,10 @@ namespace CharacterSpace
         public float percentOfHp;
         public float percentOfMana;
 
+        [Header("Skill Cooldowns(Temporary")]
+        public float healingCooldown;
+        private float cooldownTimer = 5f;
+
         [Header("Background Settings")]
         public bool isDead;
 
@@ -140,23 +144,24 @@ namespace CharacterSpace
         private void Start()
         {
             particle.Stop();
-            maxHealth = baseHealth;
-            maxMana = baseMana;
 
             foreach (Stat thisStat in statManager.stats)
             {
                 statDictionary.Add(thisStat, baseStatValue);
-            }
 
-            foreach (Stat thisStat in statManager.stats)
-            {
-                tempDictionary.Add(thisStat, baseStatValue);
             }
 
             foreach (var item in statDictionary.Keys)
             {
+                item.statChanged = true;
                 item.Initialize(this.gameObject);
+                item.statChanged = false;
             }
+
+
+
+            maxHealth = baseHealth;
+            maxMana = baseMana;
 
             currentHealth = maxHealth;
             currentMana = maxMana;
@@ -174,11 +179,20 @@ namespace CharacterSpace
             ///For updating the stats when one is increased.
             if (statIncreased)
             {
-                statDictionary = tempDictionary;
                 foreach (var item in statDictionary.Keys)
                 {
-                    item.Initialize(this.gameObject);
+                    if (item.statChanged)
+                    {
+                        item.Initialize(this.gameObject);
+                        item.statChanged = false;
+                    }
                 }
+
+                /*foreach (var item in statDictionary.Keys)
+                {
+                    if(item > tempDictionary.Keys.))
+                    item.Initialize(this.gameObject);
+                }*/
                 statIncreased = false;
             }
 
@@ -276,16 +290,33 @@ namespace CharacterSpace
                 }
             }
 
-            //Ranged Spell Attack
+            //Fireball Spell Attack
             if (Input.GetKeyDown(KeyCode.M))
             {
                 if (selectedUnit != null)
                 {
                     //playerSpells.Find(x => x.name)
                     //RangedSpell();
-                    CastSpell();
+                    CastFireball();
                 }
             }
+            if(Input.GetKeyDown(KeyCode.H))
+            {
+                if(selectedUnit != null || selectedUnit == null)
+                {
+                    selectedUnit = this.gameObject;
+                    if(healingCooldown <= 0)
+                    {
+                        CastHeal();
+                        healingCooldown = cooldownTimer;
+                    }
+                    else
+                    {
+                        Debug.Log("Healing is on cooldown");
+                    }
+                }
+            }
+            healingCooldown -= Time.deltaTime;
         }
 
         void SelectTarget()
@@ -298,7 +329,7 @@ namespace CharacterSpace
                 {
                     selectedUnit = hit.transform.gameObject;
 
-                    selectedUnit.transform.GetComponent<EnemyStats>().Selected();
+                    //selectedUnit.transform.GetComponent<EnemyStats>().Selected();
 
                     enemyStatsScript = selectedUnit.transform.gameObject.transform.GetComponent<EnemyStats>();
 
@@ -315,7 +346,7 @@ namespace CharacterSpace
                     }
                     else
                     {
-                        selectedUnit.transform.GetComponent<EnemyStats>().Deselected();
+                        //selectedUnit.transform.GetComponent<EnemyStats>().Deselected();
                         selectedUnit = null;
                         didDoubleClick = false;
                         doubleClickTimer = 0;
@@ -329,15 +360,21 @@ namespace CharacterSpace
             enemyStatsScript.ReceiveDamage(currentAttackPower);
         }
 
-        void CastSpell()
+        void CastFireball()
         {
             //playerSpells.Find(x => x.name == "Fireball").TriggerSpell(rangedSpellPrefab);
             playerSpells.Find(x => x.name == "Fireball").TriggerSpell(this.gameObject);
         }
+        void CastHeal()
+        {
+            playerSpells.Find(x => x.name == "Heal").TriggerSpell(this.gameObject);
+        }
 
         public void ReceiveDamage(float dmg)
         {
+            Debug.Log("You have taken " + dmg + " amount of damage");
             currentHealth -= dmg;
+            Debug.Log("You currently have " + currentHealth + " health");
         }
 
         /*Listerner for the player exp*/

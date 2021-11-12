@@ -13,7 +13,7 @@ namespace CharacterSpace
 
         public bool affectsHealth = false;
         public bool affectsMana = false;
-
+        public bool statChanged = false;
 
         public abstract void Initialize(GameObject obj);
     }

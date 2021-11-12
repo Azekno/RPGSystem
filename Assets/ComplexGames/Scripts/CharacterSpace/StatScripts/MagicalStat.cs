@@ -21,21 +21,25 @@ namespace CharacterSpace
         {
             magValue = obj.GetComponent<PlayerStats>().baseStatValue * statMultiplier;
             tempManaValue = (obj.GetComponent<PlayerStats>().baseStatValue * statMultiplier) / 2;
-            if (affectsMana)
+            if (statChanged)
             {
-                obj.GetComponent<PlayerStats>().maxMana += tempManaValue;
-            }
-            if (isMagAttk)
-            {
-                obj.GetComponent<PlayerStats>().currentMagicAttackPower += magValue;
-            }
-            if (isMagDef)
-            {
-                obj.GetComponent<PlayerStats>().currentMagicDefense += magValue;
-            }
-            if (affectsManaRegen)
-            {
-                obj.GetComponent<PlayerStats>().manaRegenAmount += (obj.GetComponent<PlayerStats>().maxMana + magValue) / 100;
+                if (affectsMana)
+                {
+                    //obj.GetComponent<PlayerStats>().maxMana += tempManaValue;
+                    obj.GetComponent<PlayerStats>().maxMana += magValue / 2;
+                }
+                if (isMagAttk)
+                {
+                    obj.GetComponent<PlayerStats>().currentMagicAttackPower += magValue / 20;
+                }
+                if (isMagDef)
+                {
+                    obj.GetComponent<PlayerStats>().currentMagicDefense += magValue / 20;
+                }
+                if (affectsManaRegen)
+                {
+                    obj.GetComponent<PlayerStats>().manaRegenAmount += (obj.GetComponent<PlayerStats>().maxMana + magValue) / 100;
+                }
             }
         }
     }
