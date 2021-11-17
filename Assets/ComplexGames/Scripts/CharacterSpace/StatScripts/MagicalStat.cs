@@ -11,7 +11,6 @@ namespace CharacterSpace
 
         public float statMultiplier = 10;
         private float magValue;
-        private float tempManaValue;
 
         /// <summary>
         /// Intializes the values for the magical stat and gives those values to the gameobject that this function is called for/on
@@ -20,23 +19,22 @@ namespace CharacterSpace
         public override void Initialize(GameObject obj)
         {
             magValue = obj.GetComponent<PlayerStats>().baseStatValue * statMultiplier;
-            tempManaValue = (obj.GetComponent<PlayerStats>().baseStatValue * statMultiplier) / 2;
             if (statChanged)
             {
-                if (affectsMana)
+                if (affectsMana && statChanged)
                 {
-                    //obj.GetComponent<PlayerStats>().maxMana += tempManaValue;
-                    obj.GetComponent<PlayerStats>().maxMana += magValue / 2;
+                    obj.GetComponent<PlayerStats>().maxMana += magValue / 10;
+                    obj.GetComponent<PlayerStats>().manaChanged = true;
                 }
-                if (isMagAttk)
+                if (isMagAttk & statChanged)
                 {
                     obj.GetComponent<PlayerStats>().currentMagicAttackPower += magValue / 20;
                 }
-                if (isMagDef)
+                if (isMagDef && statChanged)
                 {
                     obj.GetComponent<PlayerStats>().currentMagicDefense += magValue / 20;
                 }
-                if (affectsManaRegen)
+                if (affectsManaRegen && statChanged)
                 {
                     obj.GetComponent<PlayerStats>().manaRegenAmount += (obj.GetComponent<PlayerStats>().maxMana + magValue) / 100;
                 }

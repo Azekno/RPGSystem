@@ -20,7 +20,9 @@ namespace CharacterSpace
         /// <param name="obj"></param>
         public override void TriggerSpell(GameObject obj)
         {
+            //spellObject = spellPrefab;
             spellObject.GetComponent<RangedSpell>().hitBox = hitBox;
+            spellCost = spellObject.GetComponent<RangedSpell>().rangedSpellCost;
 
             Vector3 spawnSpellLoc = new Vector3(obj.transform.position.x, obj.transform.position.y, obj.transform.position.z);
 
