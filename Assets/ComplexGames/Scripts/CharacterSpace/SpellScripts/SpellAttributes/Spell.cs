@@ -6,11 +6,11 @@ namespace CharacterSpace
 
     public abstract class Spell : ScriptableObject
     {
-        public new string name = "New Spell";
-        public int levelNeeded;
-        public int spellPointsNeeded;
-        public float cooldownTime = 1f;
-        
+        public string spellName = "";
+        public GameObject spellPrefab = null;
+        public Texture2D spellIcon = null;
+        public float spellCost = 0;
         public abstract void TriggerSpell(GameObject obj);
+
     }
 }

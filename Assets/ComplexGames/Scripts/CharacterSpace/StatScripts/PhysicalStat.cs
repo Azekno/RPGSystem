@@ -23,7 +23,8 @@ namespace CharacterSpace
 
             if (affectsHealth && statChanged)
             {
-                obj.GetComponent<PlayerStats>().maxHealth += physValue;
+                obj.GetComponent<PlayerStats>().maxHealth += physValue / 10;
+                obj.GetComponent<PlayerStats>().healthChanged = true;
             }
             if (isAttack && statChanged)
             {

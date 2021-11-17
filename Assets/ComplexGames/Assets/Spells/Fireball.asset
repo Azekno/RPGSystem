@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3032c61616cc25408c04a682da60d33, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: 
-  name: Fireball
-  levelNeeded: 0
-  spellPointsNeeded: 0
-  cooldownTime: 1
+  spellName: Fireball
+  spellPrefab: {fileID: 0}
+  spellIcon: {fileID: 0}
+  spellCost: 0
+  spellMinDamage: 0
+  spellMaxDamage: 0
+  projectileSpeed: 0
   spellObject: {fileID: 7375801620881655032, guid: 8da07e91bad8b2144988422c407972a8, type: 3}
-  description: 
+  description: Shoots a fireball
   icon: {fileID: 0}
   isAOE: 0
   isDamageOverTime: 0

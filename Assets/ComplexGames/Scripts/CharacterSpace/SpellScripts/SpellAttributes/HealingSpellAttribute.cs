@@ -7,7 +7,7 @@ namespace CharacterSpace
     [CreateAssetMenu(menuName = "RPG Generator/Player/Create Spell/Healing Spell")]
     public class HealingSpellAttribute : Spell
     {
-        public GameObject spellPrefab;
+        public GameObject healSpellPrefab;
         public string description;
         public Sprite icon;
         public bool isAOE;

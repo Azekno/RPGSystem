@@ -8,22 +8,28 @@ public class RangedSpell : MonoBehaviour
     public GameObject player;
     public GameObject target;
     private EnemyStats enemy = null;
-    public float hitBox = 5;
-    public float spellSpeed = 30;
+    public float hitBox = 5f;
+    public float spellSpeed = 30f;
     public float spellRange;
-    public float baseSpellDamage = 1;
+    public float baseSpellDamage = 1f;
     public float currentSpellDamage;
+    public float rangedSpellCost = 10f;
 
 
     private void Start()
     {
         enemy = target.GetComponent<EnemyStats>();
         currentSpellDamage = baseSpellDamage;
+        Physics.IgnoreCollision(this.gameObject.GetComponent<Collider>(), player.GetComponent<Collider>());
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(target == null)
+        {
+            Destroy(gameObject);
+        }
         ///If the target isn't null, the spell will do a distacne check and begin 'chasing' the target before entering the hitbox which will call the hitTarget function
         if(target != null && target != player)
         {
@@ -41,6 +47,7 @@ public class RangedSpell : MonoBehaviour
                 HitTarget();
             }
         }
+
     }
     
     /// <summary>
@@ -49,7 +56,6 @@ public class RangedSpell : MonoBehaviour
     void SpellDamage()
     {
         currentSpellDamage = baseSpellDamage * (player.GetComponent<PlayerStats>().currentMagicAttackPower) / 4;
-        Debug.Log("Dealt " + currentSpellDamage + " spell damage to the enemy");
         enemy.ReceiveDamage(currentSpellDamage);
     }
 

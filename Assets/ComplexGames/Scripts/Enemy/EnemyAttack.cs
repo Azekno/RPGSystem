@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CharacterSpace;
@@ -23,11 +23,15 @@ public class EnemyAttack : MonoBehaviour
     public float attackCooldownTime;
     
     public float knockback;
+    public bool hasCollided = false;
+    private float triggerCountdown;
+    public float triggerTimer = 3f;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyStats = GetComponent<EnemyStats>();
+        triggerCountdown = triggerTimer;
     }
 
     // Update is called once per frame
@@ -35,34 +39,24 @@ public class EnemyAttack : MonoBehaviour
     {
         if (!enemyStats.isDead)
         {
-            if (enemyStats.isMultiplayer)
-            {
-                if (target == null)
-                {
-                    SearchForTarget();
-
-                    WanderAround();
-                }
-                else
-                {
-                    FollowTarget();
-                }
-            }
-            else
+            if(!hasCollided)
             {
                 WanderAround();
                 SearchForTarget();
             }
+           else
+            {
+                if (triggerCountdown <= 0)
+                {
+                    transform.Translate(Vector3.back * movementSpeed * Time.deltaTime);
+                    hasCollided = false;
+                    triggerCountdown = triggerTimer;
+                }
+                triggerCountdown -= Time.deltaTime;
+            }
+
         }
     }
-
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Player"))
-        {
-            AttackTarget();
-        }
-    }*/
 
     /// <summary>
     /// The enemy will move around in a direction for a set amount of time before determining a new wander direction;
@@ -78,6 +72,16 @@ public class EnemyAttack : MonoBehaviour
         {
             wanderTime = Random.Range(5.0f, 15.0f);
             Wander();
+        }
+    }
+
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Wall"))
+        {
+            hasCollided = true;
         }
     }
 
@@ -98,19 +102,6 @@ public class EnemyAttack : MonoBehaviour
             if (distanceToPlayer < detectionDistance)
             {
                 FollowTarget();
-            }
-        }
-        else
-        {
-            Vector3 center = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-            Collider[] hitColliders = Physics.OverlapSphere(center, 100);
-            int i = 0;
-            while (i < hitColliders.Length)
-            {
-                if (hitColliders[i].transform.CompareTag("Player"))
-                {
-                    target = hitColliders[i].transform.gameObject;
-                }
             }
         }
     }
@@ -148,12 +139,9 @@ public class EnemyAttack : MonoBehaviour
 
         playerStats.ReceiveDamage(Random.Range(attackDamageMin, attackDamageMax));
 
-        //pushVector = playerStats.gameObject.transform.position - transform.position;
         pushVector = target.transform.position - transform.position;
         pushVector.y = 0;
-        //pushVector = Vector3.Normalize(pushVector);
 
-        //playerStats.gameObject.GetComponent<Rigidbody>().AddForceAtPosition(pushVector * knockForce, transform.position, ForceMode.Impulse);
         target.GetComponent<KnockbackScript>().AddImpactForce(pushVector, knockback);
     }
 

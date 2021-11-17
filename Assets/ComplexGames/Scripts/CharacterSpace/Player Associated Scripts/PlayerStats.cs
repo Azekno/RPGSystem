@@ -6,6 +6,8 @@ namespace CharacterSpace
     public class PlayerStats : MonoBehaviour
     {
         public GameManager statManager;
+        public UIHealthBar healthBar;
+        public UIHealthBar manaBar;
 
         public ParticleSystem particle;
         public bool particleSystemActive;
@@ -68,6 +70,9 @@ namespace CharacterSpace
         public float manaRegenAmount;
         public float percentOfHp;
         public float percentOfMana;
+
+        public bool healthChanged = false;
+        public bool manaChanged = false;
 
         [Header("Skill Cooldowns(Temporary")]
         public float healingCooldown;
@@ -136,15 +141,14 @@ namespace CharacterSpace
             maxMana += manaLevelModifier;
             currentHealth = maxHealth;
             currentMana = maxMana;
-
+            healthBar.SetMax(maxHealth);
+            manaBar.SetMax(maxMana);
             particle.Play();
-
         }
 
         private void Start()
         {
             particle.Stop();
-
             foreach (Stat thisStat in statManager.stats)
             {
                 statDictionary.Add(thisStat, baseStatValue);
@@ -158,13 +162,14 @@ namespace CharacterSpace
                 item.statChanged = false;
             }
 
-
-
             maxHealth = baseHealth;
             maxMana = baseMana;
 
             currentHealth = maxHealth;
             currentMana = maxMana;
+
+            healthBar.SetMax(maxHealth);
+            manaBar.SetMax(maxMana);
         }
 
 
@@ -175,6 +180,11 @@ namespace CharacterSpace
 
         void Update()
         {
+            //UI
+            //Updates the UI text that is displayed
+            healthBar.displayText.text = currentHealth.ToString("0") + " / " + maxHealth.ToString("0");
+            manaBar.displayText.text = currentMana.ToString("0") + " / " + maxMana.ToString("0");
+
             ExpToNextLevel(level);
             ///For updating the stats when one is increased.
             if (statIncreased)
@@ -187,23 +197,14 @@ namespace CharacterSpace
                         item.statChanged = false;
                     }
                 }
-
-                /*foreach (var item in statDictionary.Keys)
-                {
-                    if(item > tempDictionary.Keys.))
-                    item.Initialize(this.gameObject);
-                }*/
                 statIncreased = false;
             }
 
-            if (currentHealth <= 0)
-            {
-                //Player will die
-                currentHealth = 0;
-            }
             if (currentHealth < maxHealth)
             {
                 percentOfHp = currentHealth / maxHealth;
+                currentHealth += hpRegenAmount * Time.deltaTime;
+                healthBar.SetUIBarPercentage(currentHealth);
             }
             if (currentHealth > maxHealth)
             {
@@ -218,6 +219,7 @@ namespace CharacterSpace
             {
                 percentOfMana = currentMana / maxMana;
                 currentMana += manaRegenAmount * Time.deltaTime;
+                manaBar.SetUIBarPercentage(currentMana);
             }
             if (currentMana > maxMana)
             {
@@ -227,6 +229,21 @@ namespace CharacterSpace
             if (exp >= nextLevelXP)
             {
                 LevelUp();
+            }
+            //Do this so that the UI display of the health and mana will properly be updated when the player increases certain stats
+            if(healthChanged)
+            {
+                currentHealth = maxHealth;
+                healthBar.SetMax(maxHealth);
+                healthBar.SetUIBarPercentage(currentHealth);
+                healthChanged = false;
+            }
+            if(manaChanged)
+            {
+                currentMana = maxMana;
+                manaBar.SetMax(maxMana);
+                manaBar.SetUIBarPercentage(currentMana);
+                manaChanged = false;
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -291,16 +308,15 @@ namespace CharacterSpace
             }
 
             //Fireball Spell Attack
-            if (Input.GetKeyDown(KeyCode.M))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 if (selectedUnit != null)
                 {
-                    //playerSpells.Find(x => x.name)
-                    //RangedSpell();
                     CastFireball();
                 }
             }
-            if(Input.GetKeyDown(KeyCode.H))
+
+            if(Input.GetKeyDown(KeyCode.C))
             {
                 if(selectedUnit != null || selectedUnit == null)
                 {
@@ -362,8 +378,11 @@ namespace CharacterSpace
 
         void CastFireball()
         {
-            //playerSpells.Find(x => x.name == "Fireball").TriggerSpell(rangedSpellPrefab);
-            playerSpells.Find(x => x.name == "Fireball").TriggerSpell(this.gameObject);
+            if(currentMana >= playerSpells.Find(x => x.name == "Fireball").spellCost)
+            {
+                playerSpells.Find(x => x.name == "Fireball").TriggerSpell(this.gameObject);
+                currentMana -= playerSpells.Find(x => x.name == "Fireball").spellCost;
+            }
         }
         void CastHeal()
         {
@@ -372,9 +391,13 @@ namespace CharacterSpace
 
         public void ReceiveDamage(float dmg)
         {
-            Debug.Log("You have taken " + dmg + " amount of damage");
             currentHealth -= dmg;
-            Debug.Log("You currently have " + currentHealth + " health");
+            healthBar.SetUIBarPercentage(currentHealth);
+            if (currentHealth <= 0)
+            {
+                //Player will die
+                currentHealth = 0;
+            }
         }
 
         /*Listerner for the player exp*/
